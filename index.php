@@ -1,6 +1,6 @@
 <?php
 
-    header("location:account/Login.php");
+    header("location:main/dashboard.php");
     
     exit;
 
