@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Login</title>
+    <title>Register</title>
 </head>
 <body class="bg-neutral-50">
 
@@ -19,13 +19,13 @@
     </div> -->
 
     <!-- Login Title -->
-    <h2 class="text-4xl text-center text-black font-semibold mb-8 font-['Poppins']">Login</h2>
+    <h2 class="text-4xl text-center text-black font-semibold mb-8 font-['Poppins']">Register</h2>
     
     <!-- Login Form -->
     <form action="#" method="POST" class="space-y-6">
       <!-- Username Input -->
       <div class="relative">
-        <input type="text" name="username" class="w-full px-4 py-2 border rounded-lg bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="Username" required>
+        <input type="text" name="username" class="w-full px-4 py-2 border rounded-lg bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="Email" required>
         <!-- <label for="username" class="absolute top-3 left-4 text-gray-500">Username</label> -->
       </div>
 
@@ -37,7 +37,7 @@
 
       <!-- Forgot Password Link -->
       <div class="flex justify-between">
-        <a href="#" class="text-xs text-zinc-600 font-semibold">Forgotten Password?</a>
+        <a href="#" class="text-xs text-zinc-600 font-semibold">Forgot Password?</a>
       </div>
       
       <!-- Login Button -->
