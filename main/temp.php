@@ -1,7 +1,10 @@
 <?php
 include "../includes/header.php";
 session_start();
-
+if(empty($_SESSION["userid"])){
+    header("location:../account/Login.php");
+    exit;
+}
 
 
 ?>

@@ -2,7 +2,14 @@
     session_start();
     session_unset();
     session_destroy();
-
+    if(empty($_SESSION["userid"])){
+        header("location:../account/Login.php");
+        exit;
+    }
+    if(isset($_SESSION["userid"])){
+        header("location:../main/temp.php");
+        exit;
+    }
     header("location:Login.php");
     exit();
 ?>

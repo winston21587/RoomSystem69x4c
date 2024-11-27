@@ -54,10 +54,10 @@
             if($stmt->execute()){
                 $temp = $stmt->fetch(PDO::FETCH_ASSOC);
                 if(empty($temp)){
-                    return true;
+                    return true; //if its true then unique email 
                 }
             }
-            return false ;
+            return false ; // it exist
         }
 
 

@@ -5,6 +5,10 @@ require_once "../class/account.php";
 require_once "../Func/clean.php";
 session_start();
 
+if(isset($_SESSION["userid"])){
+    header("location:../main/temp.php");
+    exit;
+}
 $pageTitle = "Login";
 
 $acc = new Account();

@@ -7,6 +7,11 @@ session_start();
 $pageTitle = "Register";
 $acc = new Account();
 
+if(isset($_SESSION["userid"])){
+    header("location:../main/temp.php");
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
     $email = clean($_POST['email']);
     $username = clean($_POST['username']);
@@ -36,8 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
     if (empty($password) || strlen($password) < 8) {
         $errors[] = "Password must be at least 8 characters.";
     }
-
+    if ($acc->CheckUnqEmail() == false){
+        $errors[] = "email exist";
+    }
     if (empty($errors)) {
+
         $acc->email = $email;
         $acc->username = $username;
         $acc->course = $course;
