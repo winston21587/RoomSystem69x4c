@@ -10,6 +10,7 @@ $pageTitle = "Login";
 $acc = new Account();
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
+
     $acc->email = clean($_POST['email']);
     $acc->password = clean($_POST['password']);
 
@@ -74,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
             isValid = false;
         }
 
-        if (password.value.trim().length < 6) {
+        if (password.value.trim().length < 8) {
             passwordError.classList.remove('hidden');
             isValid = false;
         }

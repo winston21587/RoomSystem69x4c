@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
         $errors[] = "Please select a section.";
     }
 
-    if (empty($password) || strlen($password) < 6) {
-        $errors[] = "Password must be at least 6 characters.";
+    if (empty($password) || strlen($password) < 8) {
+        $errors[] = "Password must be at least 8 characters.";
     }
 
     if (empty($errors)) {
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
         </div>
 
         <div class="flex justify-between items-center">
-            <input name="submit" type="submit" class="px-6 py-2 bg-red-600 text-white rounded-3xl shadow-lg">
+            <input name="submit" type="submit" value="submit" class="px-6 py-2 bg-red-600 text-white rounded-3xl shadow-lg">
         </div>
     </form>
 
