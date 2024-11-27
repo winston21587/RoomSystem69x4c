@@ -9,6 +9,7 @@
         public $email = " ";
         public $course = " ";
         public $section = " ";
+        public $role;
 
         public $password = " ";
 
@@ -25,6 +26,7 @@
                 $this->email = $user['email'];
                 $this->course = $user['course'];
                 $this->section = $user['section'];
+                $this->role = $user['role'];
                 return true;
             }
 
