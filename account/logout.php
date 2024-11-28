@@ -1,15 +1,16 @@
 <?php
     session_start();
-    session_unset();
-    session_destroy();
     if(empty($_SESSION["userid"])){
         header("location:../account/Login.php");
-        exit;
+    }elseif(isset($_SESSION["userid"]) && $_SESSION["role"] == "Admin"){
+        header("location:../admin/admin.php");
     }
-    if(isset($_SESSION["userid"])){
+    elseif(isset($_SESSION["userid"])){
         header("location:../main/temp.php");
-        exit;
-    }
+    }else{
+    session_unset();
+    session_destroy();
     header("location:Login.php");
     exit();
+}
 ?>

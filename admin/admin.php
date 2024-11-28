@@ -10,6 +10,26 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
 <!DOCTYPE html>
 <html lang="en">
 <body>
+    <h1>Admin</h1>
+    <form method="GET">
+        <select name="department" id="department">
+            <option value="CCS">CSS</option>
+            <option value="CLA">CLA</option>
+            <option value="CSM">CSM</option>
+            <option value="Engineering">Engineering</option>
+        </select>
+    </form>
+    <h2>Rooms</h2>
+    <table>
+        <thead>
+            <tr>
+                <td>Room id</td>
+                <td>Room name</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+        </thead>
+    </table>
 <a href="../account/logout.php">logout</a>
 </body>
 </html>
