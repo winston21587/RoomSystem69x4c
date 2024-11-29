@@ -89,45 +89,45 @@
         }
     </style>
     <script>
-        function openModal(buildingName) {
-            const modal = document.getElementById('dynamicModal');
-            const modalContent = document.getElementById('modalContent');
+        // function openModal(buildingName) {
+        //     const modal = document.getElementById('dynamicModal');
+        //     const modalContent = document.getElementById('modalContent');
 
-            modalContent.innerHTML = `<h3>${buildingName}</h3><p>Loading rooms for ${buildingName}...</p>`;
+        //     modalContent.innerHTML = `<h3>${buildingName}</h3><p>Loading rooms for ${buildingName}...</p>`;
             
-            fetch(`fetch_rooms.php?building=${buildingName}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.length > 0) {
-                        const roomList = data.map(
-                            room => `<li>${room.name} - Status: ${room.status}</li>`
-                        ).join('');
-                        modalContent.innerHTML = `
-                            <h3>${buildingName}</h3>
-                            <ul>${roomList}</ul>
-                        `;
-                    } else {
-                        modalContent.innerHTML = `<h3>${buildingName}</h3><p>No rooms available.</p>`;
-                    }
-                })
-                .catch(error => {
-                    modalContent.innerHTML = `<h3>${buildingName}</h3><p>Error loading rooms.</p>`;
-                    console.error('Error fetching room data:', error);
-                });
+        //     fetch(`fetch_rooms.php?building=${buildingName}`)
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             if (data.length > 0) {
+        //                 const roomList = data.map(
+        //                     room => `<li>${room.name} - Status: ${room.status}</li>`
+        //                 ).join('');
+        //                 modalContent.innerHTML = `
+        //                     <h3>${buildingName}</h3>
+        //                     <ul>${roomList}</ul>
+        //                 `;
+        //             } else {
+        //                 modalContent.innerHTML = `<h3>${buildingName}</h3><p>No rooms available.</p>`;
+        //             }
+        //         })
+        //         .catch(error => {
+        //             modalContent.innerHTML = `<h3>${buildingName}</h3><p>Error loading rooms.</p>`;
+        //             console.error('Error fetching room data:', error);
+        //         });
 
-            modal.style.display = 'flex';
-        }
+        //     modal.style.display = 'flex';
+        // }
 
-        function closeModal() {
-            const modal = document.getElementById('dynamicModal');
-            modal.style.display = 'none';
-        }
+        // function closeModal() {
+        //     const modal = document.getElementById('dynamicModal');
+        //     modal.style.display = 'none';
+        // }
     </script>
 </head>
 <body>
     <h1>Select Building</h1>
     <div class="button-group">
-        <button class="btn" data-bg="CCS" onclick="openModal('CCS')">CCS</button>
+        <!-- <button class="btn" data-bg="CCS" onclick="openModal('CCS')">CCS</button>
         <button class="btn" data-bg="CSM" onclick="openModal('CSM')">CSM</button>
         <button class="btn" data-bg="Engineering" onclick="openModal('Engineering')">Engineering</button>
         <button class="btn" data-bg="CLA" onclick="openModal('CLA')">CLA</button>
@@ -143,14 +143,18 @@
         <button class="btn" data-bg="CPADS" onclick="openModal('CPADS')">CPADS</button>
         <button class="btn" data-bg="CSSPE" onclick="openModal('CSSPE')">CSSPE</button>
         <button class="btn" data-bg="CSWCD" onclick="openModal('CSWCD')">CSWCD</button>
-        <button class="btn" data-bg="CTE" onclick="openModal('CTE')">CTE</button>
+        <button class="btn" data-bg="CTE" onclick="openModal('CTE')">CTE</button> -->
+
+
+        <button class="btn" id="openModal">CCS</button>
+
     </div>
 
-    <div id="dynamicModal" class="modal">
+    <!-- <div id="dynamicModal" class="modal">
         <div class="modal-content">
             <div id="modalContent"></div>
             <button onclick="closeModal()">Close</button>
         </div>
-    </div>
+    </div> -->
 </body>
 </html>
