@@ -30,6 +30,7 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
 <!DOCTYPE html>
 <html lang="en">
 <body>
+<h1>Hello</h1>
         <form method="POST" >
         <input type="text" name="RoomName" placeholder="Enter Room Name" >
         <select name="department" id="department">
