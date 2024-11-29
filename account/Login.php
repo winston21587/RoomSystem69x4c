@@ -30,7 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
                 exit;
             }else{
             header("location:../main/temp.php");
-            exit;}
+            exit;
+            }
     } else {
         $_SESSION['message'] = "Failed to login";
     }
