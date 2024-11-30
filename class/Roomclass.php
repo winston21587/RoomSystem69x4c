@@ -21,12 +21,14 @@ class Room extends Database
         return $data;
     }
 
-    function showAllSched()
+    // Changed the sqsl query to look for the room id instead of the id para mas specific and correct ang output.
+    function showAllSched($id)
     {
-        $sql = "SELECT * FROM schedule";
+        $sql = "SELECT subject, start_time, end_time FROM schedule WHERE roomid = :id";
 
         
         $query = $this->pdo->prepare($sql);
+        $query->bindParam(":id", $id);
         $data = null;
 
         if($query->execute()){

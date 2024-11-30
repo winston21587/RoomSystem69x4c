@@ -7,7 +7,8 @@
         $roomObj = new Room();
 
         $roomDetails = $roomObj->fetchRoomId($roomId);
-       $subjectDetails = $roomObj->showAllSched();
+        // added param sa subDetails
+        $subjectDetails = $roomObj->showAllSched($roomId); 
 
         if(!empty($roomDetails)){
             $roomName = $roomDetails['RoomName'];
@@ -49,6 +50,18 @@
             <th>Start</th>
             <th>End</th>
         </tr>
+
+        <!-- added handling for other depts kase ala pa man sila subs -->
+        <?php if(empty($subjectDetails)):?> 
+            <tr>
+                <td colspan="3">
+                    <span>
+                        No Subjects found.
+                    </span>
+                </td>
+            </tr>
+        <?php endif;?>
+
         <?php foreach($subjectDetails as $subArr): ?>
             <tr> 
                     <td><?= $subArr["subject"]?></td>
