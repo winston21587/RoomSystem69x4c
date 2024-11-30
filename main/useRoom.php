@@ -1,5 +1,5 @@
 <?php
-    include "./class/Room.class.php";
+    require_once "../class/Roomclass.php";
 
     if(isset($_GET['id'])){
         $roomId = $_GET['id'];
@@ -7,7 +7,7 @@
         $roomObj = new Room();
 
         $roomDetails = $roomObj->fetchRoomId($roomId);
-        $subjectDetails = $roomObj->showAllSched();
+       $subjectDetails = $roomObj->showAllSched();
 
         if(!empty($roomDetails)){
             $roomName = $roomDetails['RoomName'];
@@ -18,7 +18,7 @@
     } else {
         echo "<H1>No info found in this room</H1>";
         exit;
-    }
+     }
 
 ?>
 

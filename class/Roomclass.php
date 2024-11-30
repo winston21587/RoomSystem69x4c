@@ -1,17 +1,17 @@
 <?php
-include "./class/Database.php";
+require_once "Database.php";
 
-class Room
+class Room extends Database
 {
     public $roomName;
     public $roomStatus;
 
-    function showAllRoom()
+    function showAllRoom($dept = NULL)
     {
-        $sql = "SELECT * FROM room";
-
-        $db = new Database;
-        $query = $db->pdo->prepare($sql);
+        $sql = "SELECT * FROM Room WHERE department = :department";
+        
+        $query = $this->pdo->prepare($sql);
+        $query->bindParam(":department", $dept);
         $data = null;
 
         if($query->execute()){
@@ -25,8 +25,8 @@ class Room
     {
         $sql = "SELECT * FROM schedule";
 
-        $db = new Database;
-        $query = $db->pdo->prepare($sql);
+        
+        $query = $this->pdo->prepare($sql);
         $data = null;
 
         if($query->execute()){
@@ -37,10 +37,10 @@ class Room
     }
 
     function fetchRoomId($recordID){
-        $sql = "SELECT * FROM room WHERE id = :recordID";
+        $sql = "SELECT * FROM Room WHERE id = :recordID";
 
-        $db = new Database;
-        $query = $db->pdo->prepare($sql);
+        
+        $query = $this->pdo->prepare($sql);
 
         $query->bindParam(":recordID", $recordID);
 
