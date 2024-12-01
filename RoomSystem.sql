@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 27, 2024 at 02:16 AM
+-- Generation Time: Dec 01, 2024 at 02:21 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -65,7 +65,14 @@ INSERT INTO `Room` (`id`, `RoomName`, `department`, `status`, `timestamp`) VALUE
 (2, 'LR-2', 'CCS', 'unavailable', '2024-11-27 01:09:31'),
 (3, 'LR-3', 'CCS', 'unavailable', '2024-11-27 01:09:31'),
 (4, 'CLA-6', 'CLA', 'unavailable', '2024-11-27 01:10:07'),
-(5, 'CSM-11', 'CSM', 'unavailable', '2024-11-27 01:10:07');
+(5, 'CSM-11', 'CSM', 'unavailable', '2024-11-27 01:10:07'),
+(6, '[value-1]', '[value-2]', 'unavailable', '2024-12-01 10:30:35'),
+(7, 'd-7', 'CCS', 'unavailable', '2024-12-01 10:45:58'),
+(8, 'd-7', 'CCS', 'unavailable', '2024-12-01 10:46:40'),
+(9, 'd-72', 'CCS', 'unavailable', '2024-12-01 10:46:55'),
+(10, 'sqw-45', 'Engineering', 'unavailable', '2024-12-01 10:47:07'),
+(11, 'ds-22', 'CLA', 'unavailable', '2024-12-01 10:55:28'),
+(12, 'ds-22', 'CCS', 'unavailable', '2024-12-01 10:55:40');
 
 -- --------------------------------------------------------
 
@@ -77,8 +84,8 @@ CREATE TABLE `schedule` (
   `id` int(11) NOT NULL,
   `roomid` int(11) NOT NULL,
   `DayOfWeek` enum('moday','tuesday','wednesday','thursday','friday','saturday','sunday') NOT NULL,
-  `start-time` time NOT NULL,
-  `end-time` time NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
   `subject` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -86,7 +93,7 @@ CREATE TABLE `schedule` (
 -- Dumping data for table `schedule`
 --
 
-INSERT INTO `schedule` (`id`, `roomid`, `DayOfWeek`, `start-time`, `end-time`, `subject`) VALUES
+INSERT INTO `schedule` (`id`, `roomid`, `DayOfWeek`, `start_time`, `end_time`, `subject`) VALUES
 (1, 1, 'moday', '07:00:00', '08:00:00', 'webdev'),
 (2, 1, 'moday', '10:00:00', '11:30:00', 'programming 1');
 
@@ -115,7 +122,7 @@ CREATE TABLE `users` (
   `course` varchar(100) NOT NULL,
   `section` varchar(50) NOT NULL,
   `password` varchar(200) NOT NULL,
-  `role` varchar(100) NOT NULL
+  `role` enum('Admin','SuperAdmin','Staff','Student') NOT NULL DEFAULT 'Student'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -123,8 +130,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `course`, `section`, `password`, `role`) VALUES
-(1, 'winston', 'winstontabotabo10@gmail.com', 'BSCS', 'A', '$2y$10$HGyNd3Lbhqv2ZEzl8/BimOBOlTVdeLrTg.2zYYXr1Ytw9yCktnBsa', ''),
-(2, 'alken', 'alken@email.com', 'BSCS', 'A', '$2y$10$DcWcPwlGtuo.3oasX3YCeOnOEbY7CLWHFc.aCh97scDdHQFzgHkTa', '');
+(3, 'winston123', 'cntmaster79@gmail.com', '', '', '$2y$10$Fi0uXyOewcWau0ZanQ3SwuxOdgBZUiWQAiYS01SAIgAXMYdvpXlVm', 'Admin'),
+(4, 'tonton', 'tabotabowinston@gmail.com', '', '', '123456789', 'Admin'),
+(5, 'alken', 'alken@email.com', 'BSIT', 'C', '$2y$10$fUJjy7wEneqI4I86Urzq5.Ey8sEnpPplC.wBcDOi8JNz4E/hG/TSe', 'Student'),
+(6, 'rashid', 'rashid@email.com', 'BSIT', 'A', '$2y$10$RvHYWtavjhLbjrHEmhrHEe2olNdRkwVndE02xZ9yX0gGa1Pg6mME.', 'Student');
 
 --
 -- Indexes for dumped tables
@@ -175,7 +184,7 @@ ALTER TABLE `Department`
 -- AUTO_INCREMENT for table `Room`
 --
 ALTER TABLE `Room`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `schedule`
@@ -193,7 +202,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables

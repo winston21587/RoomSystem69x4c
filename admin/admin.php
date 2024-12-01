@@ -1,5 +1,6 @@
 <?php
 require_once "../class/adminClass.php";
+require_once "../class/Roomclass.php";
 include "../Func/clean.php";
 $pageTitle = "Admin";
 include "../includes/header.php";
@@ -11,6 +12,7 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
 }
 
     $Admin = new Admin();
+    $Room = new Room();
     // var_dump($_POST);
     // var_dump($Admin);
 
@@ -36,49 +38,92 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
 
 <!DOCTYPE html>
 <html lang="en">
+
 <body>
 
     <?php include "../modals/AddRoomModal.php";  ?>
-    
-    <h1>Admin</h1>
-    <h2>Rooms</h2>
-    <button onclick="OpenAddRoom()" >Add Room</button>
-    <table>
-        <thead>
-            <tr>
-                <td>Room id</td>
-                <td>Room name</td>
-                <td>Status</td>
-                <td>add room</td>
-                <td>Edit</td>
-                <td>Delete</td>
-            </tr>
-        </thead>
-        <tbody>
-                <?php foreach($Admin->ShowRooms() as $r):   ?>
-                    <tr>
-                        <td><?= $r['id']; ?></td>
-                        <td><?= $r['RoomName']; ?></td>
-                        <td><?= $r['department']; ?></td>
-                        <td><?= $r['status']; ?></td>
-                        <td><button class="EditRoom" data-id="<?= $r['id']; ?>" >Edit</button></td>
-                        <td><button class="DeleteRoom" data-id="<?= $r['id']; ?>" >Delete</button></td>
+    <div class="flex flex-row w-full p-6 px-16 justify-between text-center items-center">
+        <h1 class="text-4xl font-bold text-black">Admin</h1>
+        <button class="px-4 py-2 bg-black text-white rounded"><a href="../account/logout.php">Logout</a></button>
+    </div>
+    <div class="table-content w-full flex flex-row justify-around ">
+        <div class="table-1">
+            <div class="table-1-head flex flex-row w-full justify-between items-center p-6">
+                <h2 class="font-bold text-2xl">Rooms</h2>
+                <button class="px-4 py-2 bg-blue-500 text-white rounded" onclick="OpenAddRoom()">Add Room</button>
+            </div>
+            <table class="min-w-full table-auto border-collapse border border-gray-200">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="px-4 py-2 text-left border-b border-gray-300">Room id</th>
+                        <th class="px-4 py-2 text-left border-b border-gray-300">Room name</th>
+                        <th class="px-4 py-2 text-left border-b border-gray-300">Status</th>
+                        <th class="px-4 py-2 text-left border-b border-gray-300">add room</th>
+                        <th class="px-4 py-2 text-left border-b border-gray-300">Edit</th>
+                        <th class="px-4 py-2 text-left border-b border-gray-300">Delete</th>
                     </tr>
-                <?php endforeach; ?>
-        </tbody>
-    </table>
-<a href="../account/logout.php">logout</a>
+                </thead>
+                <tbody>
+                    <?php foreach($Admin->ShowRooms() as $r):   ?>
+                    <tr>
+                        <td class="px-4 py-2 border-b border-gray-300"><?= $r['id']; ?></td>
+                        <td class="px-4 py-2 border-b border-gray-300"><?= $r['RoomName']; ?></td>
+                        <td class="px-4 py-2 border-b border-gray-300"><?= $r['department']; ?></td>
+                        <td class="px-4 py-2 border-b border-gray-300"><?= $r['status']; ?></td>
+                        <td class="px-4 py-2 border-b border-gray-300"><button class="EditRoom"
+                                data-id="<?= $r['id']; ?>">Edit</button></td>
+                        <td class="px-4 py-2 border-b border-gray-300"><button class="DeleteRoom"
+                                data-id="<?= $r['id']; ?>">Delete</button></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-2">
+            <div class="table-2-head flex w-full justify-between px-4 items-center p-4">
+                <h2 class="text-xl font-bold" >Schedules</h2>
+                <button class="px-4 py-2 bg-blue-500 text-white rounded">Insert Schedule</button>
+            </div>
+            <table>
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="px-4 py-2 text-left border-b border-gray-300">Day</th>
+                        <th class="px-4 py-2 text-left border-b border-gray-300">Start Time</th>
+                        <th class="px-4 py-2 text-left border-b border-gray-300">End Time</th>
+                        <th class="px-4 py-2 text-left border-b border-gray-300">Subject</th>
+                        <th class="px-4 py-2 text-left border-b border-gray-300">Manage</th>
+                        <th class="px-4 py-2 text-left border-b border-gray-300">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($Room->showAllSched($depart) as $r): ?>
+                    <td class="px-4 py-2 border-b border-gray-300"><?= $r['DayOfWeek'] ?></td>
+                    <td class="px-4 py-2 border-b border-gray-300"><?= $r['start_time'] ?></td>
+                    <td class="px-4 py-2 border-b border-gray-300"><?= $r['end_time'] ?></td>
+                    <td class="px-4 py-2 border-b border-gray-300"><?= $r['subject'] ?></td>
+                    <td class="px-4 py-2 border-b border-gray-300"><button>Edit</button></td>
+                    <td class="px-4 py-2 border-b border-gray-300"><button>Delete</button></td>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a href="../account/logout.php">logout</a>
 </body>
+
 </html>
-<?php include "../includes/footer.php"; ?>
+<?php include "../includes/footer.php";
+      include "../js/admin.js";
+?>
 
 <script>
-    let addRoom = document.getElementById("AdminModal")
+let addRoom = document.getElementById("AdminModal")
 
-    function OpenAddRoom() {
-        addRoom.style.display = "block";
-    }
-    function closeAddRoom() {
-        addRoom.style.display = "none";
-    }
+function OpenAddRoom() {
+    addRoom.style.display = "block";
+}
+
+function closeAddRoom() {
+    addRoom.style.display = "none";
+}
 </script>

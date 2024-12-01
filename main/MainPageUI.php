@@ -18,7 +18,7 @@ if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Admin"){
 <!DOCTYPE html>
 <html lang="en">
 <body>
-    <h1>Select Building</h1>
+    <h1 class="" >Select Building</h1>
     <a href="../account/logout.php">logout</a>
 
     <div class="button-group">

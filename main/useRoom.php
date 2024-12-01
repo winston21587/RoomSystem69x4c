@@ -11,22 +11,19 @@
         header("location:../admin/admin.php");
         exit;
     }
-    
-    
         if(isset($_GET['id'])){
-        $roomId = $_GET['id'];
-        $roomObj = new Room();
+            $roomId = $_GET['id'];
+            $roomObj = new Room();
 
-        $roomDetails = $roomObj->fetchRoomId($roomId);
-        // added param sa subDetails
-        $subjectDetails = $roomObj->showAllSched($roomId); 
+            $roomDetails = $roomObj->fetchRoomId($roomId);
+            $subjectDetails = $roomObj->showAllSched($roomId); 
 
-        if(!empty($roomDetails)){
-            $roomName = $roomDetails['RoomName'];
-        } else {
-            echo "<H1>No info found in this room</H1>";
-            exit;
-        }
+            if(!empty($roomDetails)){
+                $roomName = $roomDetails['RoomName'];
+            } else {
+                echo "<H1>No info found in this room</H1>";
+                exit;
+            }
     } else {
         echo "<H1>No info found in this room</H1>";
         exit;
@@ -47,6 +44,7 @@
             <th>Subject</th>
             <th>Start</th>
             <th>End</th>
+            <th>Info</th>
         </tr>
 
         <!-- added handling for other depts kase ala pa man sila subs -->
@@ -65,6 +63,7 @@
                     <td><?= $subArr["subject"]?></td>
                     <td><?= $subArr["start_time"]?></td>
                     <td><?= $subArr["end_time"]?></td>
+                    <td><button>Check</button></td>
             </tr>
         <?php endforeach;?>
     </table>
