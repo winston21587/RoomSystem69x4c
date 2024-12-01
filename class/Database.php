@@ -4,7 +4,7 @@
         private $user = 'root';
         private $db = 'RoomSystem';
         private $pass = '';
-        protected $pdo = null;
+        public $pdo = null;
         public function __construct(){
             try{
                 $this->pdo = new PDO('mysql:host='.$this->host.';dbname='.$this->db,
