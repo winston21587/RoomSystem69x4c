@@ -1,15 +1,26 @@
+<?php
+$pageTitle = "main";
+include "../includes/header.php";
+session_start();
+if(empty($_SESSION["userid"])){
+    header("location:../account/Login.php");
+    exit;
+}
+if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Admin"){
+    header("location:../admin/admin.php");
+    exit;
+}
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/roomModal.css">
-    <title>Room Availability</title>
-
-</head>
 <body>
     <h1>Select Building</h1>
-    
+    <a href="../account/logout.php">logout</a>
+
     <div class="button-group">
 
         <button id="dp-btn" class="btn dp-btn" data-bg="CCS">CCS</button>
@@ -41,7 +52,7 @@
     </div>
 </body>
 </html>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-<script src="../js/room.js"></script>
 
+<?php
+include "../includes/footer.php";

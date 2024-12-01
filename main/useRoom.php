@@ -1,9 +1,20 @@
 <?php
+    $pageTitle = "main";
     require_once "../class/Roomclass.php";
-
-    if(isset($_GET['id'])){
+    include "../includes/header.php";
+    session_start();
+    if(empty($_SESSION["userid"])){
+        header("location:../account/Login.php");
+        exit;
+    }
+    if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Admin"){
+        header("location:../admin/admin.php");
+        exit;
+    }
+    
+    
+        if(isset($_GET['id'])){
         $roomId = $_GET['id'];
-
         $roomObj = new Room();
 
         $roomDetails = $roomObj->fetchRoomId($roomId);
@@ -26,21 +37,8 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <script>
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleString();
-        }
-
-        setInterval(updateClock, 1000);
-    </script>
-</head>
 <body>
+    <a href="MainPageUI.php"><--</a>
     <h1>Schedule for room <?= $roomName?></h1> <br>
     <h2>Current time: <span id="clock"></span></h2> <br>
     <button>Use this room</button> <br> <br>
@@ -71,6 +69,13 @@
         <?php endforeach;?>
     </table>
 
+    <script>
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleString();
+        }
+        setInterval(updateClock, 1000);
+    </script>
     <script>updateClock();</script>
 </body>
 </html>

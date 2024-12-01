@@ -8,7 +8,7 @@
         header("location:../admin/admin.php");
     }
     if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Student"){
-        header("location:../main/temp.php");
+        header("location:../main/MainPageUI.php");
 
     }
     

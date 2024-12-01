@@ -1,12 +1,12 @@
 <?php
-
+$pageTitle = "Login";
 include "../includes/header.php";
 require_once "../class/account.php";
 require_once "../Func/clean.php";
 session_start();
 
 if(isset($_SESSION["userid"])){
-    header("location:../main/temp.php");
+    header("location:../main/MainPageUI.php");
     exit;
 }
 $pageTitle = "Login";
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
                 header("location:../admin/admin.php");
                 exit;
             }else{
-            header("location:../main/temp.php");
+            header("location:../main/MainPageUI.php");
             exit;
             }
     } else {

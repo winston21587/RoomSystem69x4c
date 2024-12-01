@@ -1,4 +1,5 @@
 <?php
+$pageTitle = "Register";
 include "../includes/header.php";
 require_once "../class/account.php";
 require_once "../Func/clean.php";
