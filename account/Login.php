@@ -24,7 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
         $_SESSION['email'] = $acc->email;
         $_SESSION['course'] = $acc->course;
         $_SESSION['section'] = $acc->section;
-        header("location:../main/temp.php");
+        $_SESSION['role'] = $acc->role;
+            if($_SESSION["role"] == "Admin"){
+                header("location:../admin/admin.php");
+                exit;
+            }else{
+            header("location:../main/temp.php");
+            exit;
+            }
     } else {
         $_SESSION['message'] = "Failed to login";
     }

@@ -5,6 +5,10 @@ if(empty($_SESSION["userid"])){
     header("location:../account/Login.php");
     exit;
 }
+if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Admin"){
+    header("location:../admin/admin.php");
+    exit;
+}
 
 
 ?>
