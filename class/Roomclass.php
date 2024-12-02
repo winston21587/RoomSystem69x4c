@@ -22,20 +22,25 @@ class Room extends Database
     }
 
     // Changed the sqsl query to look for the room id instead of the id para mas specific and correct ang output.
-    function showAllSched($id = '', $dept = '')
+    function showAllSched($id,$dept)
     {
         $sql = "SELECT * FROM schedule";
 
         if(isset($id)){
-            $sql .= "WHERE roomid = :id";
+            $sql = "SELECT * FROM schedule WHERE roomid = :id";
         }
         if(isset($dept)){
-            $sql .= "LEFT JOIN Room ON Room.id = schedule.roomid";
+            $sql = "SELECT * FROM schedule LEFT JOIN Room ON Room.id = schedule.roomid WHERE Room.department = :department";
         }
         $query = $this->pdo->prepare($sql);
-        $query->bindParam(":id", $id);
-        $data = null;
 
+        if(isset($id)){
+        $query->bindParam(":id", $id);
+        }
+        if(isset($dept)){
+        $query->bindParam(":department", $dept);
+        }
+        $data = null;
         if($query->execute()){
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
         }
