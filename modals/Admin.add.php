@@ -1,6 +1,4 @@
-<div style="display:none" class="AdminModal" id="AdminModal" >
-    <button onclick="closeAddRoom()" >Close Modal</button>
-
+<div  class="AdminModal" id="AdminModal" >
     <form method="POST"  >
         <input type="text" name="RoomName" placeholder="Enter Room Name" >
         <select name="department" id="department">

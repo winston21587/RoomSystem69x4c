@@ -22,7 +22,7 @@ class Room extends Database
     }
 
     // Changed the sqsl query to look for the room id instead of the id para mas specific and correct ang output.
-    function showAllSched($id = NULL, $dept = NULL)
+    function showAllSched($id = '', $dept = '')
     {
         $sql = "SELECT * FROM schedule";
 

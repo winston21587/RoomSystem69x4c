@@ -41,8 +41,8 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
 
 <body>
 
-    <?php include "../modals/AddRoomModal.php";  ?>
     <div class="flex flex-row w-full p-6 px-16 justify-between text-center items-center">
+        <button onclick="open()" >click</button>
         <h1 class="text-4xl font-bold text-black">Admin</h1>
         <button class="px-4 py-2 bg-black text-white rounded"><a href="../account/logout.php">Logout</a></button>
     </div>
@@ -50,7 +50,7 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
         <div class="table-1">
             <div class="table-1-head flex flex-row w-full justify-between items-center p-6">
                 <h2 class="font-bold text-2xl">Rooms</h2>
-                <button class="px-4 py-2 bg-blue-500 text-white rounded" onclick="OpenAddRoom()">Add Room</button>
+                <button class=" addRoomBtn px-4 py-2 bg-blue-500 text-white rounded" onclick="alertthis()" >Add Room</button>
             </div>
             <table class="min-w-full table-auto border-collapse border border-gray-200">
                 <thead>
@@ -111,19 +111,22 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
     <a href="../account/logout.php">logout</a>
 </body>
 
+<div id="customModalAdmin" class="modal ">
+        <div class="modal-content">
+            <button id="closeModalAdmin" class="close">close</button>
+            <div id="modalBodyAdmin">
+
+            </div>
+        </div>
+    </div>
+
+
 </html>
 <?php include "../includes/footer.php";
-      include "../js/admin.js";
 ?>
-
 <script>
-let addRoom = document.getElementById("AdminModal")
-
-function OpenAddRoom() {
-    addRoom.style.display = "block";
-}
-
-function closeAddRoom() {
-    addRoom.style.display = "none";
-}
+    function open(){
+        alert("clicked");
+    }
 </script>
+

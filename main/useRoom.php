@@ -14,9 +14,9 @@
         if(isset($_GET['id'])){
             $roomId = $_GET['id'];
             $roomObj = new Room();
-
+            $dept = NULL;
             $roomDetails = $roomObj->fetchRoomId($roomId);
-            $subjectDetails = $roomObj->showAllSched($roomId); 
+            $subjectDetails = $roomObj->showAllSched($roomId,$dept); 
 
             if(!empty($roomDetails)){
                 $roomName = $roomDetails['RoomName'];
