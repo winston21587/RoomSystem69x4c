@@ -7,6 +7,7 @@ class Admin extends Database{
     public $department;
     public $status;
     public $timeIn;
+    
     public $timeOut;
 
     public function addRoom(){
@@ -19,10 +20,15 @@ class Admin extends Database{
         return $stmt->execute();
     }
 
-    public function ShowRooms(){
+    public function ShowRooms($dept = NULL){
         $query = "SELECT id,RoomName,department,status FROM Room";
+        if(isset($dept)){
+            $query = "SELECT id,RoomName,department,status FROM Room WHERE department = :department";
+        }
         $stmt = $this->pdo->prepare($query);
-
+        if(isset($dept)){
+        $stmt->bindParam(":department", $dept);
+        }
         if($stmt->execute()){
             return $stmt->fetchAll();
         }
@@ -37,17 +43,17 @@ class Admin extends Database{
         $query = "DELETE FROM Room WHERE id = :id";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(":id",$id);
-
         return $stmt->execute();
     }
 
-    public function EditRooms(){
-        $query = "UPDATE Room SET RoomName = :RoomName ,department = :department ,status = :department WHERE id = :id ";
+    public function EditRooms($id,$roomname,$department,$status){
+        $query = "UPDATE Room SET RoomName = :RoomName ,department = :department ,status = :status WHERE id = :id ";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindParam(":id",$this->id);
-        $stmt->bindParam(":RoomName",$this->roomname);
-        $stmt->bindParam(":department",$this->department);
-        $stmt->bindParam(":status",$this->status);
+
+        $stmt->bindParam(":id",$id);
+        $stmt->bindParam(":RoomName",$roomname);
+        $stmt->bindParam(":department",$department);
+        $stmt->bindParam(":status",$status);
 
         return $stmt->execute();
     
