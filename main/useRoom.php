@@ -14,9 +14,9 @@
         if(isset($_GET['id'])){
             $roomId = $_GET['id'];
             $roomObj = new Room();
-
+            $dept = NULL;
             $roomDetails = $roomObj->fetchRoomId($roomId);
-            $subjectDetails = $roomObj->showAllSched($roomId); 
+            $subjectDetails = $roomObj->showAllSched($roomId,$dept); 
 
             if(!empty($roomDetails)){
                 $roomName = $roomDetails['RoomName'];
@@ -38,7 +38,7 @@
     <a href="MainPageUI.php"><--</a>
     <h1>Schedule for room <?= $roomName?></h1> <br>
     <h2>Current time: <span id="clock"></span></h2> <br>
-    <button>Use this room</button> <br> <br>
+    <button class="Addsched" >Use this room</button> <br> <br>
     <table border="1">
         <tr>
             <th>Subject</th>
@@ -67,7 +67,9 @@
             </tr>
         <?php endforeach;?>
     </table>
-
+            <div>
+                <?php include "../modals/RoomSchedules.php" ?>
+            </div>
     <script>
         function updateClock() {
             const now = new Date();
