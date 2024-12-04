@@ -63,4 +63,26 @@ class Room extends Database
         }
             return $data;
     }
+
+    // function roomCheckIn($roomid, $start_time, $end_time){
+    //     $sql = "INSERT INTO schedule(start_time, end_time) VALUES (:start_time, :end_time) WHERE roomid = :roomid";
+
+    //     $query = $this->pdo->prepare($sql);
+
+    //     $query->bindParam(":roomid", $roomid);
+    //     $query->bindParam(":start_time", $start_time);
+    //     $query->bindParam(":end_time", $end_time);
+
+    //     return $query->execute();
+    // }
+
+    function roomAvail($id){
+        $sql = "UPDATE room SET status = 'unavailable' WHERE id = :id";
+
+        $query = $this->pdo->prepare($sql);
+
+        $query->bindParam(":id", $id);
+
+        return $query->execute();     
+    }
 }

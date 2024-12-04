@@ -29,22 +29,29 @@
         exit;
      }
 
+     if(isset($confirmUse)){
+        $message = "Input Received";
+    } else {
+        $message = "No input received";
+    }     
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
 <body>
     <a href="MainPageUI.php"><--</a>
-    <h1>Schedule for room <?= $roomName?></h1> <br>
+    <h1>Schedule for room <?= $roomName?> STATUS: <?= $roomDetails["status"]?></h1> <br>
     <h2>Current time: <span id="clock"></span></h2> <br>
-    <button class="Addsched" >Use this room</button> <br> <br>
+    <button class="Addsched" data-bg="<?= $roomId?>">Use this room</button> <br> <br>
+
+    <h1><span id="displayTime"></span></h1>
+
+
     <table border="1">
         <tr>
             <th>Subject</th>
             <th>Start</th>
             <th>End</th>
-            <th>Info</th>
         </tr>
 
         <!-- added handling for other depts kase ala pa man sila subs -->
@@ -63,13 +70,19 @@
                     <td><?= $subArr["subject"]?></td>
                     <td><?= $subArr["start_time"]?></td>
                     <td><?= $subArr["end_time"]?></td>
-                    <td><button>Check</button></td>
             </tr>
         <?php endforeach;?>
     </table>
-            <div>
-                <?php include "../modals/RoomSchedules.php" ?>
+    
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <button id="closeModal" class="close">close</button>
+            <div id="modalBody">
+
             </div>
+        </div>
+    </div>
+
     <script>
         function updateClock() {
             const now = new Date();
@@ -80,3 +93,7 @@
     <script>updateClock();</script>
 </body>
 </html>
+
+<?php
+    include "../includes/footer.php";
+?>

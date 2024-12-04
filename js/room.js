@@ -26,8 +26,4 @@ $(document).ready(function () {
     const dataId = $(this).data('id');
     window.location.href = `../main/useRoom.php?id=${dataId}`;
   });
-
-
-
-
 });
