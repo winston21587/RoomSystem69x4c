@@ -14,16 +14,20 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
     $Admin = new Admin();
     $Room = new Room();
     // var_dump($_POST);
+    // var_dump($_GET);
+    // var_dump($_SESSION['w']);
     // var_dump($Admin);
     $id;
-    $depart = NULL;
+    // $depart = NULL;
+    // $_SESSION['w'] = 'bad';
     
-    if(isset($_POST["submit"] )  && $_SERVER['REQUEST_METHOD'] == 'POST' ){
+    if(isset($_POST["submit"] )  && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST["submit"] == 'add' ){
     $Admin->roomname = clean($_POST['RoomName']);
     $Admin->department = clean($_POST['department']);
+    $_SESSION['w'] = 'good';
     if($Admin->CheckUnqRoom()){
         if($Admin->addRoom()){
-            echo "<p> added successdfully </p>";
+            header("location:../account/logout.php");
         }else{
             echo "<p> added unsuccessfully </p>";
         }
@@ -34,6 +38,8 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
     exit;
 
 }
+
+
 
 ?>
 
@@ -52,6 +58,7 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
                 <h2 class="font-bold text-2xl">Rooms</h2>
                 <select name="department" id="departmentSelect" >
                 <option value="" selected disabled>Select a Department</option>
+                <option value="all">All</option>
                     <option value="CCS">CSS</option>
                     <option value="CLA">CLA</option>
                     <option value="CSM">CSM</option>
@@ -65,8 +72,7 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
                         <th class="px-4 py-2 text-left border-b border-gray-300">Room id</th>
                         <th class="px-4 py-2 text-left border-b border-gray-300">Room name</th>
                         <th class="px-4 py-2 text-left border-b border-gray-300">Department</th>
-                        <th class="px-4 py-2 text-left border-b border-gray-300">Status</th>
-                        <th class="px-4 py-2 border-b border-gray-300 text-center" colspan="2">Manage</th>
+                        <th class="px-4 py-2 border-b border-gray-300 text-center" colspan="3">Manage</th>
                     </tr>
                 </thead>
                 <tbody class="showroombody" id="RoomForDept">
@@ -77,7 +83,7 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
         <div class="table-2">
             <div class="table-2-head flex w-full justify-between px-4 items-center p-4">
                 <h2 class="text-xl font-bold" >Schedules</h2>
-                <button class="px-4 py-2 bg-blue-500 text-white rounded">Insert Schedule</button>
+                <button class="px-4 py-2 bg-blue-500 text-white rounded" id="schedInsert" >Insert Schedule</button>
             </div>
             <table>
                 <thead>
@@ -90,17 +96,8 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
                         <th class="px-4 py-2 text-left border-b border-gray-300">Delete</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php foreach($Room->showAllSched($id,$depart) as $r): ?>
-                    <tr>
-                    <td class="px-4 py-2 border-b border-gray-300"><?= $r['DayOfWeek'] ?></td>  
-                    <td class="px-4 py-2 border-b border-gray-300"><?= $r['start_time'] ?></td>
-                    <td class="px-4 py-2 border-b border-gray-300"><?= $r['end_time'] ?></td>
-                    <td class="px-4 py-2 border-b border-gray-300"><?= $r['subject'] ?></td>
-                    <td class="px-4 py-2 border-b border-gray-300"><button>Edit</button></td>
-                    <td class="px-4 py-2 border-b border-gray-300"><button>Delete</button></td>
-                    </tr>
-                    <?php endforeach; ?>
+                <tbody id="schedForRoom" >
+                    
                 </tbody>
             </table>
         </div>
