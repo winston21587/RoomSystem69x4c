@@ -20,13 +20,13 @@ class Admin extends Database{
         return $stmt->execute();
     }
 
-    public function ShowRooms($dept = NULL){
+    public function ShowRooms($dept){
         $query = "SELECT id,RoomName,department,status FROM Room";
-        if(isset($dept)){
+        if(!empty($dept)){
             $query = "SELECT id,RoomName,department,status FROM Room WHERE department = :department";
         }
         $stmt = $this->pdo->prepare($query);
-        if(isset($dept)){
+        if(!empty($dept)){
         $stmt->bindParam(":department", $dept);
         }
         if($stmt->execute()){
@@ -40,10 +40,13 @@ class Admin extends Database{
     }
 
     public function DeleteRooms($id){
+        if(!empty($id)){
         $query = "DELETE FROM Room WHERE id = :id";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(":id",$id);
         return $stmt->execute();
+    }
+    return false;
     }
 
     public function EditRooms($id,$roomname,$department,$status){
