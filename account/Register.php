@@ -2,11 +2,13 @@
 $pageTitle = "Register";
 include "../includes/header.php";
 require_once "../class/account.php";
+require_once "../class/adminClass.php";
 require_once "../Func/clean.php";
 session_start();
 
 $pageTitle = "Register";
 $acc = new Account();
+$admin = new Admin();
 
 if(isset($_SESSION["userid"])){
     header("location:../main/temp.php");
@@ -85,10 +87,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
         <div class="relative">
             <label for="course">Course</label>
             <select name="course" id="course" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
-                <option value="">Select a course</option>
-                <option value="BSCS">BSCS</option>
-                <option value="BSIT">BSIT</option>
-                <option value="BS-ACT">BS-ACT</option>
+                <option selected disabled>Select a course</option>
+                <?php foreach($admin->getCourse() as $c): ?>
+                    <option value="<?= $c['id'] ?>"><?= $c['coursename'] ?></option>
+
+                <?php endforeach; ?>
+
             </select>
             <small id="courseError" class="text-red-600 text-xs hidden">Please select a course.</small>
 

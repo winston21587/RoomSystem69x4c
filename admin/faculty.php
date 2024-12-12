@@ -6,7 +6,7 @@ $pageTitle = "Admin";
 include "../includes/header.php";
 session_start();
 
-if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
+if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Staff"){
     header("location:../account/Login.php");
     exit;
 }
@@ -19,22 +19,8 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
     // var_dump($Admin);
     $id;
     // $depart = NULL;
-    $_SESSION['err'] = 'good';
+
     
-    if(isset($_POST["submit"] )  && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST["submit"] == 'add' ){
-        $room = clean($_POST['RoomName']);
-        $dept = clean($_POST['department']);
-    if($Admin->CheckUnqRoom($room)){
-        if($Admin->addRoom($room,$dept)){
-               header("location:". $_SERVER['PHP_SELF']);
-               exit;
-        }else{
-            echo "<p> added unsuccessfully </p>";
-        }
-    }else{
-        echo "<p>room name already exist</p>";
-    }
-}
     if(isset($_POST["submit"] )  && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST["submit"] == 'Addsched' ){
         $day = clean($_POST['day']);
         $start_time = clean($_POST['start_time']);
@@ -63,68 +49,87 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
 <body class="w-full h-full">
 
     <div class="flex flex-row w-full p-6 px-16 justify-between mb-4 text-center items-center shadow-lg ">
-        <h1 class="text-4xl font-bold text-black uppercase">Admin</h1>
+        <h1 class="text-4xl font-bold text-black uppercase">Faculty</h1>
+        <h1 class="text-4xl text-black uppercase"><?= $_SESSION['username'] ?></h1>
         <button class="px-4 py-2 bg-black text-white rounded"><a href="../account/logout.php">Logout</a></button>
     </div>
-    <div class="table-content w-full flex flex-row justify-around pb-7">
-        <div class="table-1">
-            <div class="table-1-head flex flex-row w-full justify-between items-center p-6">
-                <h2 class="font-bold text-2xl">Rooms</h2>
-                <button id="Addbtn" class=" addRoomBtn px-4 py-2 bg-blue-500 text-white rounded">Add Room</button>
-            </div>
-            <table class=" RoomTable display">
-                <thead>
-                    <tr >
-                        <th>Room id</th>
-                        <th>Room name</th>
-                        <th>Department</th>
-                        <th></th>
-                        <th>Manage</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody class="showroombody" >
-                <?php foreach($Admin->ShowRooms() as $r):   ?>
-                    <tr>
-                        <td ><?= $r['id']; ?></td>
-                        <td ><?= $r['RoomName']; ?></td>
-                        <td ><?= $r['department']; ?></td>
-                        <td ><button class="checkSched"
-                                data-id="<?= $r['id'] ?>" data-name="<?= $r['RoomName'] ?>">Check Schedule</button></td>
+    <div class="inbox p-5 px-12" >
+    <h1 class="text-4xl text-center text-gray-800 mt-10">Inbox</h1>
+        <table class=" RoomTable display" >
+            <thead>
+                <tr>
+                    <th>Request</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Room</th>
+                    <th>Schedule</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach($Admin->displayRequest($_SESSION['username']) as $d): ?>
+                        <tr>
+                            <td><?= ($d['Name'] == $_SESSION['username']) ? "Accept" : "Requested"; ?></td>
+                            <td><?= ($d['Name'] == $_SESSION['username']) ? $d['sender'] : $d['Name'] ?></td>
+                            <td><?= $d['Department'] ?></td>
+                            <td><?= $d['Room'] ?></td>
+                            <td><?= $d['start']. " ".$d['end'] ?></td>
+                            <td><?= $d['status'] ?></td>
+                            <td>
+                                <?php if($d['Name'] == $_SESSION['username']): ?>
+                                    <button data-id="<?= $d['id'] ?>" class="AcceptRequestBTN" >Accept</button>
+                                <?php endif; ?>
+                            </td>
 
-                        <td ><button class="EditRoom"
-                                data-id="<?= $r['id']; ?>" data-room="<?= $r['RoomName'] ?>"
-                                data-dept="<?= $r['department'] ?>" data-status="<?= $r['status'] ?>">Edit</button>
-                        </td>
-                        <td ><button class="DeleteRoom"
-                                data-id="<?= $r['id']; ?>" data-room="<?= $r['RoomName'] ?>"
-                                data-dept="<?= $r['department'] ?>" data-status="<?= $r['status'] ?>">Delete</button>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                
-                </tbody>
-            </table>
+                        </tr>
+                    <?php endforeach;?>
+            </tbody>
+        </table>
+    </div>
+    <div class="table-content w-full flex flex-row justify-around pb-7">
+        <div class="inbox" >
+        <h1 class="text-4xl text-center text-gray-800 mt-10">Faculty Room Schedule</h1>
+    <div class="max-w-md mx-auto mt-8 bg-white p-6 rounded-lg shadow-lg">
+        <form method="POST">
+
+            <div class="mb-4">
+                <label for="FacultyDepartment" class="block text-lg font-medium text-gray-700">Department</label>
+                <select name="FacultyDepartment"  id="FacultyDepartment" class="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600 FacultyDepartment" required>
+                <option disabled selected>Choose Department</option>
+
+                <?php foreach($Admin->getDept() as $c): ?>
+                    <option value="<?= $c['id'] ?>"><?= $c['deptName'] ?></option>
+                <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="mb-4 RoomDept ">
+
+            </div>
+
+        </form>
+
+    </div>
         </div>
-        <div class="table-2">
+
+        <div class="table-2 mt-4">
             <div class="table-2-head flex w-full justify-between px-4 items-center p-4">
-                <h2 class="text-xl font-bold ScheduleText">Schedules</h2>
-                <button class="px-4 py-2 bg-blue-500 text-white rounded" id="schedInsert">Insert Schedule</button>
+                <h2 class="text-4xl  ScheduleText">Schedules</h2>
             </div>
 
             <table>
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="px-4 py-2 text-left border-b border-gray-300">Day</th>
-                        <th class="px-4 py-2 text-left border-b border-gray-300">end Time</th>
+                        <th class="px-4 py-2 text-left border-b border-gray-300">Start Time</th>
                         <th class="px-4 py-2 text-left border-b border-gray-300">End Time</th>
                         <th class="px-4 py-2 text-left border-b border-gray-300">Subject</th>
-                        <th class="px-4 py-2 text-left border-b border-gray-300">Manage</th>
-                        <th class="px-4 py-2 text-left border-b border-gray-300">Delete</th>
+                        <th>Professor</th>
+                        <th>Submit</th>
                     </tr>
                 </thead>
                 <tbody id="schedForRoom">
-                
+       
                 </tbody>
             </table>
         </div>
@@ -155,20 +160,6 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
 
 </body>
 
-<script>
-    const Addbtn = document.getElementById('Addbtn');
-const modalBack = document.getElementById('customModalAdmin');
-const closeAddBtn = document.getElementById('closeModalAdmin');
-
-Addbtn.addEventListener('click', function() {
-    modalBack.classList.remove("hidden");
-});
-
-closeAddBtn.addEventListener('click', function() {
-    modalBack.classList.add("hidden");
-});
-
-</script>
 
 
 <?php include "../includes/footer.php" ?>

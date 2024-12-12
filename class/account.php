@@ -24,7 +24,7 @@
                 $this->id = $user['id'];
                 $this->username = $user['username'];
                 $this->email = $user['email'];
-                $this->course = $user['course'];
+                $this->course = $user['courseid'];
                 $this->section = $user['section'];
                 $this->role = $user['role'];
                 return true;
@@ -34,13 +34,13 @@
         }
 
         public function register(){
-            $query = "INSERT INTO users (username,email,course,section,password)
-            VALUES (:username,:email,:course,:section,:password)";
+            $query = "INSERT INTO users (username,email,courseid,section,password)
+            VALUES (:username,:email,:courseid,:section,:password)";
             $stmt = $this->pdo->prepare($query);
             $this->password = password_hash($this->password, PASSWORD_BCRYPT);
             $stmt->bindParam(':username', $this->username);
             $stmt->bindParam(':email', $this->email);
-            $stmt->bindParam(':course', $this->course);
+            $stmt->bindParam(':courseid', $this->course);
             $stmt->bindParam(':section', $this->section);
             $stmt->bindParam(':password', $this->password);
             return $stmt->execute();
