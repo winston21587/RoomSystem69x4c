@@ -1,24 +1,24 @@
 <?php
 $pageTitle = "main";
 include "../includes/header.php";
-session_start();
-if(empty($_SESSION["userid"])){
-    header("location:../account/Login.php");
-    exit;
-}
-if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Admin"){
-    header("location:../admin/admin.php");
-    exit;
-}
-
+// session_start();
+// if(empty($_SESSION["userid"])){
+//     header("location:../account/Login.php");
+//     exit;
+// }
+// if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Admin"){
+//     header("location:../admin/admin.php");
+//     exit;
+// }
 
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <body>
-    <h1 class="" >Select Building</h1>
+    <h1 class="">Select Building</h1>
     <a href="../account/logout.php">logout</a>
 
     <div class="button-group">
@@ -41,16 +41,9 @@ if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Admin"){
         <button id="dp-btn" class="btn dp-btn" data-bg="CSWCD">CSWCD</button>
         <button id="dp-btn" class="btn dp-btn" data-bg="CTE">CTE</button>
     </div>
-
-    <div id="customModal" class="modal">
-        <div class="modal-content">
-            <button id="closeModal" class="close">close</button>
-            <div id="modalBody">
-
-            </div>
-        </div>
-    </div>
+    
 </body>
+
 </html>
 
 
