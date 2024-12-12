@@ -7,6 +7,9 @@
     if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Admin"){
         header("location:../admin/admin.php");
     }
+    if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Staff"){
+        header("location:../admin/faculty.php");
+    }
     if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Student"){
         header("location:../main/MainPageUI.php");
 

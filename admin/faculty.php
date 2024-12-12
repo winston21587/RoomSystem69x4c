@@ -6,35 +6,21 @@ $pageTitle = "Admin";
 include "../includes/header.php";
 session_start();
 
-if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
+if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Staff"){
     header("location:../account/Login.php");
     exit;
 }
 
     $Admin = new Admin();
     $Room = new Room();
-    var_dump($_POST);
+    // var_dump($_POST);
     // var_dump($_GET);
     // var_dump($_SESSION['w']);
     // var_dump($Admin);
     $id;
     // $depart = NULL;
-    $_SESSION['err'] = 'good';
+
     
-    if(isset($_POST["submit"] )  && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST["submit"] == 'add' ){
-        $room = clean($_POST['RoomName']);
-        $dept = clean($_POST['department']);
-    if($Admin->CheckUnqRoom($room)){
-        if($Admin->addRoom($room,$dept)){
-               header("location:". $_SERVER['PHP_SELF']);
-               exit;
-        }else{
-            echo "<p> added unsuccessfully </p>";
-        }
-    }else{
-        echo "<p>room name already exist</p>";
-    }
-}
     if(isset($_POST["submit"] )  && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST["submit"] == 'Addsched' ){
         $day = clean($_POST['day']);
         $start_time = clean($_POST['start_time']);
@@ -63,49 +49,32 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
 <body class="w-full h-full">
 
     <div class="flex flex-row w-full p-6 px-16 justify-between mb-4 text-center items-center shadow-lg ">
-        <h1 class="text-4xl font-bold text-black uppercase">Admin</h1>
+        <h1 class="text-4xl font-bold text-black uppercase">Faculty</h1>
         <button class="px-4 py-2 bg-black text-white rounded"><a href="../account/logout.php">Logout</a></button>
     </div>
     <div class="table-content w-full flex flex-row justify-around pb-7">
-        <div class="table-1">
-            <div class="table-1-head flex flex-row w-full justify-between items-center p-6">
-                <h2 class="font-bold text-2xl">Rooms</h2>
-                <button id="Addbtn" class=" addRoomBtn px-4 py-2 bg-blue-500 text-white rounded">Add Room</button>
-            </div>
-            <table class=" RoomTable display">
-                <thead>
-                    <tr >
-                        <th>Room id</th>
-                        <th>Room name</th>
-                        <th>Department</th>
-                        <th></th>
-                        <th>Manage</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody class="showroombody" >
-                <?php foreach($Admin->ShowRooms() as $r):   ?>
-                    <tr>
-                        <td ><?= $r['id']; ?></td>
-                        <td ><?= $r['RoomName']; ?></td>
-                        <td ><?= $r['department']; ?></td>
-                        <td ><button class="checkSched"
-                                data-id="<?= $r['id'] ?>" data-name="<?= $r['RoomName'] ?>">Check Schedule</button></td>
+        <div class="inbox" >
+        <h1 class="text-4xl text-center text-gray-800 mt-10">Faculty Room Schedule</h1>
+    <div class="max-w-md mx-auto mt-8 bg-white p-6 rounded-lg shadow-lg">
+        <form method="POST">
 
-                        <td ><button class="EditRoom"
-                                data-id="<?= $r['id']; ?>" data-room="<?= $r['RoomName'] ?>"
-                                data-dept="<?= $r['department'] ?>" data-status="<?= $r['status'] ?>">Edit</button>
-                        </td>
-                        <td ><button class="DeleteRoom"
-                                data-id="<?= $r['id']; ?>" data-room="<?= $r['RoomName'] ?>"
-                                data-dept="<?= $r['department'] ?>" data-status="<?= $r['status'] ?>">Delete</button>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                
-                </tbody>
-            </table>
+            <div class="mb-4">
+                <label for="FacultyDepartment" class="block text-lg font-medium text-gray-700">Department</label>
+                <select name="FacultyDepartment" id="FacultyDepartment" class="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600" required>
+                <?php foreach($Admin->getDept() as $c): ?>
+                    <option value="<?= $c['id'] ?>"><?= $c['deptName'] ?></option>
+                <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="mb-4 ">
+                    
+            </div>
+
+        </form>
+
+    </div>
         </div>
+
         <div class="table-2">
             <div class="table-2-head flex w-full justify-between px-4 items-center p-4">
                 <h2 class="text-xl font-bold ScheduleText">Schedules</h2>
@@ -155,20 +124,6 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
 
 </body>
 
-<script>
-    const Addbtn = document.getElementById('Addbtn');
-const modalBack = document.getElementById('customModalAdmin');
-const closeAddBtn = document.getElementById('closeModalAdmin');
-
-Addbtn.addEventListener('click', function() {
-    modalBack.classList.remove("hidden");
-});
-
-closeAddBtn.addEventListener('click', function() {
-    modalBack.classList.add("hidden");
-});
-
-</script>
 
 
 <?php include "../includes/footer.php" ?>

@@ -6,9 +6,22 @@ require_once "../Func/clean.php";
 session_start();
 
 if(isset($_SESSION["userid"])){
-    header("location:../main/MainPageUI.php");
-    exit;
+    if($_SESSION['role'] = "Staff"){
+        header("location:../admin/faculty.php");
+        exit;
+    }
+    if($_SESSION['role'] = "Admin"){
+        header("location:../admin/admin.php");
+        exit;
+    }
+    if($_SESSION['role'] = "Student"){
+        header("location:../main/MainPageUI.php");
+        exit;
+    }
+    
+  
 }
+
 $pageTitle = "Login";
 
 $acc = new Account();
@@ -28,7 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
             if($_SESSION["role"] == "Admin"){
                 header("location:../admin/admin.php");
                 exit;
-            }else{
+            }elseif($_SESSION["role"] == "Staff"){
+                header("location:../admin/faculty.php");
+                exit;
+            }
+            else{
             header("location:../main/MainPageUI.php");
             exit;
             }

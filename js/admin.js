@@ -1,30 +1,30 @@
 $(document).ready(function () {
 
     
-    $('#departmentSelect').on('change', function(e) {
-        // console.log('Click event triggered');
-        const deptSelect = $(this).val();
-        console.log(deptSelect);
-        displayRoomTable(deptSelect);
-        e.preventDefault();
+    // $('#departmentSelect').on('change', function(e) {
+    //     // console.log('Click event triggered');
+    //     const deptSelect = $(this).val();
+    //     console.log(deptSelect);
+    //     displayRoomTable(deptSelect);
+    //     e.preventDefault();
         
-    });
+    // });
 
-    function displayRoomTable(deptSelect){
-        $.ajax({
-            url: '../tables/Admin.ShowRooms.php',
-            method: 'GET', 
-            data: { dept: deptSelect },
-            success: function (response) {
-                $('#RoomForDept').html(response);
-            },
-            error: function (xhr, status, error) {
+    // function displayRoomTable(deptSelect){
+    //     $.ajax({
+    //         url: '../tables/Admin.ShowRooms.php',
+    //         method: 'GET', 
+    //         data: { dept: deptSelect },
+    //         success: function (response) {
+    //             $('#RoomForDept').html(response);
+    //         },
+    //         error: function (xhr, status, error) {
               
-                console.error('Error:', error);
-                $('#RoomForDept').html('<p>Failed to load table. Please try again.</p>');
-            }
-        });
-    };
+    //             console.error('Error:', error);
+    //             $('#RoomForDept').html('<p>Failed to load table. Please try again.</p>');
+    //         }
+    //     });
+    // };
         
 
     $('.DeleteRoom').on('click', function() {
@@ -64,7 +64,7 @@ $(document).ready(function () {
         });
     });
 
-
+    
 
     $('.EditRoom').on('click', function() {
         const RoomID = $(this).data('id');
@@ -114,12 +114,16 @@ $(document).ready(function () {
       });
 
     $('.checkSched').on('click', function() {
+        // console.log("ASs");
+        // window.location.href = window.location.href;
         const RoomID = $(this).data('id');
-        // schedForRoom
+        const NameOfRoom = $(this).data('name');
+        $('.ScheduleText').html(" Schedules for " + NameOfRoom);
+        
         $.ajax({
             url: '../tables/sched.table.php',
             method: 'GET', 
-            data: { id: RoomID },   
+            data: { id: RoomID},   
             success: function (response) {
                 $('#schedForRoom').html(response);
             },
@@ -128,16 +132,42 @@ $(document).ready(function () {
                 console.error('Error:', error);
                 $('#RoomForDept').html('<p>Failed to load table. Please try again.</p>');
             }
+            
         });
         $('#schedInsert').on('click', function(){
             $.ajax({
                 url: '../modals/Admin.sched.php',
                 method: 'GET', 
+                data: { id: RoomID,
+                    name: NameOfRoom
+                 },
                 success: function (response) {
                     $(".ModalManageBody").html(response);
                     $(".ManageModal").fadeIn(); 
                 }
             });
+        });
+    });
+
+    $('.RoomTable').DataTable({
+        paging: true,
+        searching: true,
+        lengthMenu: [5, 10, 25, 50],
+        stateSave: true,
+        "bDestroy": true
+    });
+
+    $('.FacultyDepartment').on("change", function (){
+        const selectedValue = $(this).val();
+        $.ajax({
+            url: '../tables/ShowRooms.php',
+            method: 'GET',
+            data: { id: selectedValue
+             },
+            success: function (response) {
+                $(".ModalManageBody").html(response);
+                $(".ManageModal").fadeIn(); 
+            }
         });
     });
 });
