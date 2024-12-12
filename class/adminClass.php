@@ -209,7 +209,7 @@ VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid)";
         Room.RoomName as Room,
         schedule.start_time as start,
         schedule.end_time as end,
-        requests.status as status 
+        requests.statuse as status 
         FROM requests
         LEFT JOIN users ON users.id = requests.faculty_id
         LEFT JOIN Department ON Department.id = users.DeptID
@@ -226,9 +226,9 @@ VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid)";
     }
 
     public function AcceptRequest($status,$id){
-        $query = "UPDATE requests SET status = :status WHERE request_id = :id";
+        $query = "UPDATE requests SET statuse = :statuse WHERE request_id = :id"; 
                $stmt = $this->pdo->prepare($query);
-               $stmt->bindParam(":status",$status);
+               $stmt->bindParam(":statuse",$status);
                $stmt->bindParam(":id",$id);
                return $stmt->execute();
     }

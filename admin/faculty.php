@@ -39,8 +39,6 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Staff"){
 
 
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -53,6 +51,7 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Staff"){
         <h1 class="text-4xl text-black uppercase"><?= $_SESSION['username'] ?></h1>
         <button class="px-4 py-2 bg-black text-white rounded"><a href="../account/logout.php">Logout</a></button>
     </div>
+ 
     <div class="inbox p-5 px-12" >
     <h1 class="text-4xl text-center text-gray-800 mt-10">Inbox</h1>
         <table class=" RoomTable display" >
