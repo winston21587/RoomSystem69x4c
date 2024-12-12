@@ -120,12 +120,18 @@ class Admin extends Database{
     function showAllSched($id)
     {
 
-        $sql = "SELECT schedule.DayOfWeek,
+        $sql = "SELECT 
+        schedule.id as SchedID,
+        schedule.DayOfWeek,
         schedule.start_time,
         schedule.end_time,
-        subject.SubName as subjectN
+        subject.SubName as subjectN,
+        profTable.profName as professor
         FROM schedule 
-        LEFT JOIN subject ON subject.id = schedule.subjectid WHERE schedule.roomid = :id";
+        LEFT JOIN subject ON subject.id = schedule.subjectid 
+        LEFT JOIN profTable ON profTable.id = schedule.profid
+        WHERE schedule.roomid = :id
+        ";
         $query = $this->pdo->prepare($sql);
 
         $query->bindParam(":id", $id);
@@ -158,10 +164,73 @@ VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid)";
 
 
     public function showroomForDept($department){
-        $query = "SELECT id,RoomName FROM WHERE department = :department ";
+        $query = "SELECT id,RoomName FROM Room WHERE department = :department ";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(":department",$department);
+        if($stmt->execute()){
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return [];
+
+    }
+
+    public function showFaculty($department){
+        $query = "SELECT users.id as id,users.username as username,Department.deptName as department
+        FROM users
+        LEFT JOIN Department ON Department.id = users.DeptID
+        WHERE role = 'Staff' AND Department.id = :department";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(":department",$department);
+        if($stmt->execute()){
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return [];
+    }
+
+    public function SendRequest($facultyID,$sender,$SchedID){
+        $query = "INSERT INTO requests (sender, schedID, faculty_id) 
+        VALUES (:sender, :schedID, :faculty_id)";
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindParam(":sender",$sender);
+        $stmt->bindParam(":schedID",$SchedID);
+        $stmt->bindParam(":faculty_id",$facultyID);
+
         return $stmt->execute();
 
     }
+
+    public function displayRequest($user){
+        $query = "SELECT 
+        requests.request_id as id,
+        requests.sender as sender,
+        users.username as Name,
+        Department.deptName as Department,
+        Room.RoomName as Room,
+        schedule.start_time as start,
+        schedule.end_time as end,
+        requests.status as status 
+        FROM requests
+        LEFT JOIN users ON users.id = requests.faculty_id
+        LEFT JOIN Department ON Department.id = users.DeptID
+        LEFT JOIN schedule ON requests.schedID = schedule.id
+        LEFT JOIN Room ON Room.id = schedule.roomid
+        WHERE requests.sender = :user OR users.username = :user";
+
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(":user",$user);
+        if($stmt->execute()){
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return [];
+    }
+
+    public function AcceptRequest($status,$id){
+        $query = "UPDATE requests SET status = :status WHERE request_id = :id";
+               $stmt = $this->pdo->prepare($query);
+               $stmt->bindParam(":status",$status);
+               $stmt->bindParam(":id",$id);
+               return $stmt->execute();
+    }
+
 }

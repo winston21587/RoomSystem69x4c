@@ -13,7 +13,7 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
 
     $Admin = new Admin();
     $Room = new Room();
-    var_dump($_POST);
+    // var_dump($_POST);
     // var_dump($_GET);
     // var_dump($_SESSION['w']);
     // var_dump($Admin);

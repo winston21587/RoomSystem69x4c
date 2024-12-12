@@ -134,6 +134,7 @@ $(document).ready(function () {
             }
             
         });
+        
         $('#schedInsert').on('click', function(){
             $.ajax({
                 url: '../modals/Admin.sched.php',
@@ -159,15 +160,99 @@ $(document).ready(function () {
 
     $('.FacultyDepartment').on("change", function (){
         const selectedValue = $(this).val();
+        console.log("value: " + selectedValue);
         $.ajax({
             url: '../tables/ShowRooms.php',
             method: 'GET',
             data: { id: selectedValue
              },
             success: function (response) {
-                $(".ModalManageBody").html(response);
-                $(".ManageModal").fadeIn(); 
+                $(".RoomDept").html(response);
+                
+                $('.RoomDepartSelected').on("change", function (){
+                    const RoomID = $(this).val();
+                    // console.log(RoomID + " = roomid");
+                    $.ajax({
+                        url: '../tables/sched.faculty.php',
+                        method: 'GET', 
+                        data: { id: RoomID },
+                        success: function (response) {
+                            $("#schedForRoom").html(response);
+                            $('.requestBTN').on('click', function (){
+                                const sender = $(this).data('name');
+                                const SchedID = $(this).data('id');
+                                $.ajax({
+                                    url: '../modals/requestComfirmation.php',
+                                    method: 'GET', 
+                                    data: { dept: selectedValue },
+                                    success: function (response){
+                                        $(".ModalManageBody").html(response);
+                                        $(".ManageModal").fadeIn(); 
+                                        $('#facultyName').on('change', function (){
+                                            const facultyID = $(this).val();
+                                            console.log("dacul idi is: " + facultyID);
+                                        
+                                        $('#RequestAproved').on("click", function (){
+                                            // alert("request Sent");
+
+                                                        $.ajax({
+                                                            url: '../Func/requestSender.php',
+                                                            method: 'GET',
+                                                            data: { facultyID: facultyID,
+                                                                    sender : sender,
+                                                                    SchedID : SchedID
+                                                             },
+                                                            success: function (response) {
+                                                                console.log("sent: " + facultyID + " " + sender + " " + SchedID );     
+                                                window.location.href = window.location.href;
+
+                                                            }
+                                                        });
+                                                    });
+                                                } )
+                                            $('#RequestDenied').on("click", function (){
+                                                window.location.href = window.location.href;
+                                            })
+
+                                    }
+                                })
+
+                            });
+                        }
+                    });
+                });
+
             }
         });
+    });
+
+    $('.AcceptRequestBTN').on("click", function (){
+        const requestID = $(this).data('id');
+        $.ajax({
+            url: '../modals/RequestResponse.php',
+            method: 'GET', 
+            success: function (response) {
+                $(".ModalManageBody").html(response);
+                $(".ManageModal").fadeIn(); 
+                $('#statusRequest').on("change", function (){
+                    const response = $(this).val();
+                    $('#requestResponse').on('click', function (){
+                        // console.log(response)
+                        $.ajax({
+                            url: '../Func/aproveReq.php',
+                            method: 'GET', 
+                            data: { idRequest: requestID,
+                                status: response
+                            },
+                            success: function (response){
+                                // $(".ManageModal").fadeOut();
+                                window.location.href = window.location.href;
+                            }
+                        });
+                    });
+                });
+            }
+        });
+      
     });
 });
