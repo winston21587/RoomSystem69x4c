@@ -76,9 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
 
     <form method="POST" class="space-y-6" id="registerForm">
         <div class="relative">
-            <input name="username" type="text" id="username" class="w-full px-4 py-2 border rounded-lg bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="Username">
+            <input name="username" type="text" id="username" class="w-full px-4 py-2 border rounded-lg bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="Username"> <br><br>
             <small id="usernameError" class="text-red-600 text-xs hidden">Username must be at least 3 characters.</small>
-
             <input name="email" type="email" id="email" class="w-full px-4 py-2 border rounded-lg bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="Email">
             <small id="emailError" class="text-red-600 text-xs hidden">Invalid email address.</small>
         </div>
