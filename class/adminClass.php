@@ -210,7 +210,7 @@ VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid)";
         Room.RoomName as Room,
         schedule.start_time as start,
         schedule.end_time as end,
-        requests.statuse as status 
+        requests.status as status 
         FROM requests
         LEFT JOIN users ON users.id = requests.faculty_id
         LEFT JOIN Department ON Department.id = users.DeptID

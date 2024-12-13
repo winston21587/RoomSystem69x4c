@@ -37,12 +37,13 @@ include "../includes/header.php";
 
 $roomObj = new Room();
 
-$array = $roomObj->showNewSched();
-
+$id = $_GET['id'] ?? null;
+$array = $roomObj->showNewSched($id);
 ?>
 
 <style>
-    th,td{
+    th,
+    td {
         border: 5px black solid;
         padding: 5px;
     }
@@ -52,7 +53,7 @@ $array = $roomObj->showNewSched();
 <html lang="en">
 
 <body>
-    <a href="MainPageUI.php"><--</a>
+    <a href="MainPageUI.php"><--< /a>
 
             <table border="1">
                 <tr>
@@ -62,9 +63,14 @@ $array = $roomObj->showNewSched();
                     <th>End Time</th>
                     <th>Subject Name</th>
                     <th>Prof Name</th>
-                    <th>Action</th>
                 </tr>
-
+                <?php if (empty($array)): ?>
+                    <tr>
+                        <td colspan="6">
+                            <p>No schedule found.</p>
+                        </td>
+                    </tr>
+                <?php endif; ?>
                 <?php foreach ($array as $arr): ?>
                     <tr>
                         <td><?= $arr["RoomName"] ?></td>
@@ -73,7 +79,6 @@ $array = $roomObj->showNewSched();
                         <td><?= $arr["end_time"] ?></td>
                         <td><?= $arr["SubName"] ?></td>
                         <td><?= $arr["profName"] ?></td>
-                        <td><button>Request</button></td>
                     </tr>
                 <?php endforeach; ?>
             </table>

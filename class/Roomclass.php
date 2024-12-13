@@ -88,17 +88,21 @@ class Room extends Database
         return $query->execute();
     }
 
-    function showNewSched()
+    function showNewSched($id)
     {
         $sql = "SELECT * FROM schedule 
         LEFT OUTER JOIN room ON (schedule.roomid = room.id)
         LEFT OUTER JOIN subject ON (subject.id = schedule.subjectid)
-        LEFT OUTER JOIN proftable ON (proftable.id = schedule.profid)";
+        LEFT OUTER JOIN proftable ON (proftable.id = schedule.profid) 
+        WHERE department = :id";
 
         $query = $this->pdo->prepare($sql);
 
+        $query->bindParam(":id", $id);
+        
         $query->execute();
 
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+
 }
