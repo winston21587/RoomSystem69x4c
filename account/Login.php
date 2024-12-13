@@ -22,37 +22,37 @@ if(isset($_SESSION["userid"])){
   
 }
 
-$pageTitle = "Login";
-
 $acc = new Account();
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
-
     $acc->email = clean($_POST['email']);
     $acc->password = clean($_POST['password']);
 
-    if ($acc->login()) {
+    $loginResult = $acc->login();
+
+    if ($loginResult['success']) {
         $_SESSION['userid'] = $acc->id;
         $_SESSION['username'] = $acc->username;
         $_SESSION['email'] = $acc->email;
         $_SESSION['course'] = $acc->course;
         $_SESSION['section'] = $acc->section;
         $_SESSION['role'] = $acc->role;
-            if($_SESSION["role"] == "Admin"){
-                header("location:../admin/admin.php");
-                exit;
-            }elseif($_SESSION["role"] == "Staff"){
-                header("location:../admin/faculty.php");
-                exit;
-            }
-            else{
+
+        if ($_SESSION["role"] == "Admin") {
+            header("location:../admin/admin.php");
+            exit;
+        } elseif ($_SESSION["role"] == "Staff") {
+            header("location:../admin/faculty.php");
+            exit;
+        } else {
             header("location:../main/MainPageUI.php");
             exit;
-            }
+        }
     } else {
-        $_SESSION['message'] = "Failed to login";
+        $errorMessage = $loginResult['error'];
     }
 }
+
 
 ?>
 
@@ -60,6 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
 <html lang="en">
 <body>
 <div class="w-80 mx-auto mt-20 p-6 bg-neutral-50 rounded-xl shadow-lg">
+<?php if (isset($errorMessage)): ?>
+    <div class="text-red-600 text-sm mb-4">
+        <?= htmlspecialchars($errorMessage) ?>
+    </div>
+<?php endif; ?>
+
     <h2 class="text-4xl text-center font-semibold font-['arial'] mb-6">Login</h2>
     <form method="POST" class="space-y-6" id="loginForm">
 

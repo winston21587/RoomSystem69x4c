@@ -52,7 +52,7 @@ $array = $roomObj->showNewSched();
 <html lang="en">
 
 <body>
-    <a href="MainPageUI.php"><--< /a>
+    <a href="MainPageUI.php"><--</a>
 
             <table border="1">
                 <tr>

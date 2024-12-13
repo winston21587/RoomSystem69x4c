@@ -1,12 +1,12 @@
 <?php
+session_start();
+
 $pageTitle = "Register";
 include "../includes/header.php";
 require_once "../class/account.php";
 require_once "../class/adminClass.php";
 require_once "../Func/clean.php";
-session_start();
 
-$pageTitle = "Register";
 $acc = new Account();
 $admin = new Admin();
 
@@ -21,7 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
     $course = clean($_POST['course']);
     $section = clean($_POST['section']);
     $password = clean($_POST['password']);
-
+    $department = clean($_POST['departmentSelect']);
+    $acc->email = $email;
     // Server-side validation
     $errors = [];
 
@@ -44,6 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
     if (empty($password) || strlen($password) < 8) {
         $errors[] = "Password must be at least 8 characters.";
     }
+    if (empty($department)) {
+        $errors[] = "Please select a department.";
+    }
     if ($acc->CheckUnqEmail() == false){
         $errors[] = "email exist";
     }
@@ -54,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
         $acc->course = $course;
         $acc->section = $section;
         $acc->password = $password;
+        $acc->department = $department;
         $acc->register();
         header("location:Login.php");
         exit;
@@ -95,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
 
             </select>
             <small id="courseError" class="text-red-600 text-xs hidden">Please select a course.</small>
-
             <label for="section">Section</label>
             <select name="section" id="section" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
                 <option value="">Select a section</option>
@@ -104,6 +108,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
                 <option value="C">C</option>
             </select>
             <small id="sectionError" class="text-red-600 text-xs hidden">Please select a section.</small>
+
+            <label for="departmentSelect">Department</label>
+            <select name="departmentSelect" id="departmentSelect" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                <option value="" selected disabled >Select a department</option>
+                    <?php foreach($admin->getDept() as $d): ?>
+                        <option value="<?= $d['id'] ?>"><?= $d['deptName'] ?></option>
+                    <?php endforeach; ?>
+            </select>
         </div>
 
         <div class="relative">

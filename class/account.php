@@ -5,37 +5,62 @@
 
         public $id = NULL;
 
-        public $username = " ";
-        public $email = " ";
-        public $course = " ";
-        public $section = " ";
-        public $role;
+        public $username = NULL;
+        public $email = null;
+        public $course = null;
+        public $section = null;
+        public $department = null;
+        public $role = null;
 
-        public $password = " ";
+        public $password = NULL;
 
 
-        public function login(){
+        // public function login(){
+        //     $query = "SELECT * FROM users WHERE email = :email";
+        //     $stmt = $this->pdo->prepare($query);
+        //     $stmt->bindParam(':email',$this->email);
+        //     $stmt->execute();
+        //     $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        //     if($user && password_verify($this->password,$user['password'])){
+        //         $this->id = $user['id'];
+        //         $this->username = $user['username'];
+        //         $this->email = $user['email'];
+        //         $this->course = $user['courseid'];
+        //         $this->section = $user['section'];
+        //         $this->role = $user['role'];
+        //         return true;
+        //     }
+
+        //     return false;
+        // }
+
+        public function login() {
             $query = "SELECT * FROM users WHERE email = :email";
             $stmt = $this->pdo->prepare($query);
-            $stmt->bindParam(':email',$this->email);
+            $stmt->bindParam(':email', $this->email);
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            if($user && password_verify($this->password,$user['password'])){
-                $this->id = $user['id'];
-                $this->username = $user['username'];
-                $this->email = $user['email'];
-                $this->course = $user['courseid'];
-                $this->section = $user['section'];
-                $this->role = $user['role'];
-                return true;
+        
+            if (!$user) {
+                return ['success' => false, 'error' => 'Email not found.'];
             }
-
-            return false;
+        
+            if (!password_verify($this->password, $user['password'])) {
+                return ['success' => false, 'error' => 'Incorrect password.'];
+            }
+            $this->id = $user['id'];
+            $this->username = $user['username'];
+            $this->email = $user['email'];
+            $this->course = $user['courseid'];
+            $this->section = $user['section'];
+            $this->role = $user['role'];
+            return ['success' => true];
         }
+        
 
-        public function register(){
-            $query = "INSERT INTO users (username,email,courseid,section,password)
-            VALUES (:username,:email,:courseid,:section,:password)";
+        public function register() {
+            $query = "INSERT INTO users (username, email, courseid, section, password, DeptID)
+                      VALUES (:username, :email, :courseid, :section, :password, :DeptID)";
             $stmt = $this->pdo->prepare($query);
             $this->password = password_hash($this->password, PASSWORD_BCRYPT);
             $stmt->bindParam(':username', $this->username);
@@ -43,13 +68,13 @@
             $stmt->bindParam(':courseid', $this->course);
             $stmt->bindParam(':section', $this->section);
             $stmt->bindParam(':password', $this->password);
+            $stmt->bindParam(':DeptID', $this->department); // Include the department ID
             return $stmt->execute();
-
         }
+        
         public function CheckUnqEmail(){
             $query = "SELECT * FROM users WHERE email = :email";
             $stmt = $this->pdo->prepare($query);
-            $this->email = htmlspecialchars(strip_tags($this->email));
             $stmt->bindParam(':email',$this->email);
 
             

@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once "../class/adminClass.php";
 require_once "../class/Roomclass.php";
 include "../Func/clean.php";
@@ -74,7 +78,7 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Staff"){
                             <td><?= ($d['Name'] == $_SESSION['username']) ? $d['sender'] : $d['Name'] ?></td>
                             <td><?= $d['Department'] ?></td>
                             <td><?= $d['Room'] ?></td>
-                            <td><?= $d['start']. " ".$d['end'] ?></td>
+                            <td><?= $d['start']. " to ".$d['end'] ?></td>
                             <td><?= $d['status'] ?></td>
                             <td>
                                 <?php if($d['Name'] == $_SESSION['username']): ?>
