@@ -174,13 +174,14 @@ VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid)";
 
     }
 
-    public function showFaculty($department){
+    public function showFaculty($department,$username){
         $query = "SELECT users.id as id,users.username as username,Department.deptName as department
         FROM users
         LEFT JOIN Department ON Department.id = users.DeptID
-        WHERE role = 'Staff' AND Department.id = :department";
+        WHERE role = 'Staff' AND Department.id = :department AND users.username != :username";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(":department",$department);
+        $stmt->bindParam(":username",$username);
         if($stmt->execute()){
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
@@ -224,13 +225,23 @@ VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid)";
         }
         return [];
     }
-
-    public function AcceptRequest($status,$id){
+    public function AcceptRequest($status, $id) {
+        $allowedStatuses = ['Pending', 'Approved', 'Rejected'];
+        if (!in_array($status, $allowedStatuses, true)) {
+            throw new InvalidArgumentException("Invalid status value: $status");
+        }    
         $query = "UPDATE requests SET statuse = :statuse WHERE request_id = :id";
-               $stmt = $this->pdo->prepare($query);
-               $stmt->bindParam(":statuse",$status);
-               $stmt->bindParam(":id",$id);
-               return $stmt->execute();
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(":statuse", $status, PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            error_log(print_r($stmt->errorInfo(), true));
+            return false;
+        }
     }
+    
 
 }

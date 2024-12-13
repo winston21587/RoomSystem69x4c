@@ -181,10 +181,13 @@ $(document).ready(function () {
                             $('.requestBTN').on('click', function (){
                                 const sender = $(this).data('name');
                                 const SchedID = $(this).data('id');
+                                console.log(sender);
                                 $.ajax({
                                     url: '../modals/requestComfirmation.php',
                                     method: 'GET', 
-                                    data: { dept: selectedValue },
+                                    data: { dept: selectedValue,
+                                            username : sender
+                                     },
                                     success: function (response){
                                         $(".ModalManageBody").html(response);
                                         $(".ManageModal").fadeIn(); 

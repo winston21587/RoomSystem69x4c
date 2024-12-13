@@ -57,9 +57,9 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Staff"){
         <h1 class="text-4xl text-black uppercase"><?= $_SESSION['username'] ?></h1>
         <button class="px-4 py-2 bg-black text-white rounded"><a href="../account/logout.php">Logout</a></button>
     </div>
-    <div class="inbox p-5 px-12" >
-    <h1 class="text-4xl text-center text-gray-800 mt-10">Inbox</h1>
-        <table class=" RoomTable display" >
+    <div class="inbox p-5 px-12">
+        <h1 class="text-4xl text-center text-gray-800 mt-10">Inbox</h1>
+        <table class=" RoomTable display">
             <thead>
                 <tr>
                     <th>Request</th>
@@ -72,48 +72,58 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Staff"){
                 </tr>
             </thead>
             <tbody>
-            <?php foreach($Admin->displayRequest($_SESSION['username']) as $d): ?>
-                        <tr>
-                            <td><?= ($d['Name'] == $_SESSION['username']) ? "Accept" : "Requested"; ?></td>
-                            <td><?= ($d['Name'] == $_SESSION['username']) ? $d['sender'] : $d['Name'] ?></td>
-                            <td><?= $d['Department'] ?></td>
-                            <td><?= $d['Room'] ?></td>
-                            <td><?= $d['start']. " to ".$d['end'] ?></td>
-                            <td><?= $d['status'] ?></td>
-                            <td>
-                                <?php if($d['Name'] == $_SESSION['username']): ?>
-                                    <button data-id="<?= $d['id'] ?>" class="AcceptRequestBTN" >Accept</button>
-                                <?php endif; ?>
-                            </td>
+                <?php foreach($Admin->displayRequest($_SESSION['username']) as $d): ?>
+                <tr>
+                    <td><?= ($d['Name'] == $_SESSION['username']) ? "Accept" : "Sending To"; ?></td>
+                    <td><?= ($d['Name'] == $_SESSION['username']) ? $d['sender'] : $d['Name'] ?></td>
+                    <td><?= $d['Department'] ?></td>
+                    <td><?= $d['Room'] ?></td>
+                    <td><?= $d['start']. " to ".$d['end'] ?></td>
+                    <td class="<?php 
+    if ($d['status'] === 'Approved') echo 'text-green-500 font-bold'; 
+    elseif ($d['status'] === 'Rejected') echo 'text-red-500 font-bold'; 
+    elseif ($d['status'] === 'Pending') echo 'text-yellow-500 font-bold'; 
+?>">
+                        <?= $d['status'] ?>
+                    </td>
+                    <td>
+                        <?php if($d['Name'] == $_SESSION['username']): ?>
+                        <button data-id="<?= $d['id'] ?>"
+                            class="AcceptRequestBTN bg-blue-500 rounded p-2 text-white">Accept</button>
+                        <?php endif; ?>
+                    </td>
 
-                        </tr>
-                    <?php endforeach;?>
+                </tr>
+                <?php endforeach;?>
             </tbody>
         </table>
     </div>
     <div class="table-content w-full flex flex-row justify-around pb-7">
-        <div class="inbox" >
-        <h1 class="text-4xl text-center text-gray-800 mt-10">Faculty Room Schedule</h1>
-    <div class="max-w-md mx-auto mt-8 bg-white p-6 rounded-lg shadow-lg">
-        <form method="POST">
+        <div class="inbox">
+            <h1 class="text-4xl text-center text-gray-800 mt-10">Faculty Room Schedule</h1>
+            <div class="max-w-md mx-auto mt-8 bg-white p-6 rounded-lg shadow-lg">
+                <form method="POST">
 
-            <div class="mb-4">
-                <label for="FacultyDepartment" class="block text-lg font-medium text-gray-700">Department</label>
-                <select name="FacultyDepartment"  id="FacultyDepartment" class="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600 FacultyDepartment" required>
-                <option disabled selected>Choose Department</option>
+                    <div class="mb-4">
+                        <label for="FacultyDepartment"
+                            class="block text-lg font-medium text-gray-700">Department</label>
+                        <select name="FacultyDepartment" id="FacultyDepartment"
+                            class="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600 FacultyDepartment"
+                            required>
+                            <option disabled selected>Choose Department</option>
 
-                <?php foreach($Admin->getDept() as $c): ?>
-                    <option value="<?= $c['id'] ?>"><?= $c['deptName'] ?></option>
-                <?php endforeach; ?>
-                </select>
+                            <?php foreach($Admin->getDept() as $c): ?>
+                            <option value="<?= $c['id'] ?>"><?= $c['deptName'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="mb-4 RoomDept ">
+
+                    </div>
+
+                </form>
+
             </div>
-            <div class="mb-4 RoomDept ">
-
-            </div>
-
-        </form>
-
-    </div>
         </div>
 
         <div class="table-2 mt-4">
@@ -133,7 +143,7 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Staff"){
                     </tr>
                 </thead>
                 <tbody id="schedForRoom">
-       
+
                 </tbody>
             </table>
         </div>
@@ -167,4 +177,5 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Staff"){
 
 
 <?php include "../includes/footer.php" ?>
+
 </html>

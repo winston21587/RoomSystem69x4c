@@ -6,6 +6,7 @@
 
     if(isset($_GET['dept'])){
         $department = clean($_GET['dept']);
+        $username = clean($_GET['username']);
     }
 ?>
 
@@ -14,7 +15,7 @@
     <label for="facultyName">Select Faculty Member:</label>
     <select name="facultyName" id="facultyName">
         <option selected disabled>--Select--</option>
-        <?php foreach($Admin->showFaculty($department) as $f): ?>
+        <?php foreach($Admin->showFaculty($department,$username) as $f): ?>
             <option value="<?= $f['id'] ?>"><?= $f['username'] ?></option>
         <?php endforeach; ?>
 
