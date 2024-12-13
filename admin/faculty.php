@@ -79,13 +79,17 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Staff"){
                     <td><?= $d['Department'] ?></td>
                     <td><?= $d['Room'] ?></td>
                     <td><?= $d['start']. " to ".$d['end'] ?></td>
-                    <td class="<?php 
-    if ($d['status'] === 'Approved') echo 'text-green-500 font-bold'; 
-    elseif ($d['status'] === 'Rejected') echo 'text-red-500 font-bold'; 
-    elseif ($d['status'] === 'Pending') echo 'text-yellow-500 font-bold'; 
-?>">
-                        <?= $d['status'] ?>
+                    <td>
+                        <span class="<?php 
+    if ($d['status'] === 'Approved') echo 'bg-green-500 text-white text-center    font-bold'; 
+    elseif ($d['status'] === 'Rejected') echo 'bg-red-500 text-white text-center  font-bold'; 
+    elseif ($d['status'] === 'Pending') echo 'bg-yellow-500 text-black text-center  font-bold'; 
+?>  px-2 py-2 rounded">
+
+                            <?= $d['status'] ?>
+                        </span>
                     </td>
+
                     <td>
                         <?php if($d['Name'] == $_SESSION['username']): ?>
                         <button data-id="<?= $d['id'] ?>"
