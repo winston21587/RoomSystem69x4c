@@ -119,7 +119,6 @@ class Admin extends Database{
 
     function showAllSched($id)
     {
-
         $sql = "SELECT 
         schedule.id as SchedID,
         schedule.DayOfWeek,

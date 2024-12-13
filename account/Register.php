@@ -90,15 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
         </div>
 
         <div class="relative">
-            <label for="course">Course</label>
-            <select name="course" id="course" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
-                <option selected disabled>Select a course</option>
-                <?php foreach($admin->getCourse() as $c): ?>
-                    <option value="<?= $c['id'] ?>"><?= $c['coursename'] ?></option>
 
-                <?php endforeach; ?>
-
-            </select>
             <small id="courseError" class="text-red-600 text-xs hidden">Please select a course.</small>
             <label for="section">Section</label>
             <select name="section" id="section" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
@@ -115,6 +107,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
                     <?php foreach($admin->getDept() as $d): ?>
                         <option value="<?= $d['id'] ?>"><?= $d['deptName'] ?></option>
                     <?php endforeach; ?>
+            </select>
+            <label for="course">Course</label>
+            <select name="course" id="course" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                <option selected disabled>Select a course</option>
+                <?php foreach($admin->getCourse() as $c): ?>
+                    <option value="<?= $c['id'] ?>"><?= $c['coursename'] ?></option>
+
+                <?php endforeach; ?>
+
             </select>
         </div>
 
