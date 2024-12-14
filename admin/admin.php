@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once "../class/adminClass.php";
 require_once "../class/Roomclass.php";
 include "../Func/clean.php";
@@ -41,11 +44,12 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Admin"){
         $end_time = clean($_POST['end_time']);
         $sub = clean($_POST['subjects']);
         $roomid = clean($_POST['roomid']);
+        $profid = clean($_POST['profid']);
 
         $start_time = date("H:i:s", strtotime($start_time));
         $end_time = date("H:i:s", strtotime($end_time));
 
-     if($Admin->AddSched($roomid,$day,$start_time,$end_time,$sub)){
+     if($Admin->AddSched($roomid,$day,$start_time,$end_time,$sub,$profid)){
             header("location:". $_SERVER['PHP_SELF']);
             exit;
         }

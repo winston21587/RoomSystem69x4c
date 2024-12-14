@@ -25,21 +25,7 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Staff"){
     // $depart = NULL;
 
     
-    if(isset($_POST["submit"] )  && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST["submit"] == 'Addsched' ){
-        $day = clean($_POST['day']);
-        $start_time = clean($_POST['start_time']);
-        $end_time = clean($_POST['end_time']);
-        $sub = clean($_POST['subjects']);
-        $roomid = clean($_POST['roomid']);
-
-        $start_time = date("H:i:s", strtotime($start_time));
-        $end_time = date("H:i:s", strtotime($end_time));
-
-     if($Admin->AddSched($roomid,$day,$start_time,$end_time,$sub)){
-            header("location:". $_SERVER['PHP_SELF']);
-            exit;
-        }
-    }
+   
 
 
 

@@ -52,6 +52,16 @@ class Admin extends Database{
     }
     return false;
     }
+    public function DeleteSchedule($id){
+        if(!empty($id)){
+        $query = "DELETE FROM schedule WHERE id = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(":id",$id);
+        return $stmt->execute();
+    }
+    return false;
+    }
+
 
     public function EditRooms($id,$roomname,$department,$status){
         $query = "UPDATE Room SET RoomName = :RoomName ,department = :department ,status = :status WHERE id = :id ";
@@ -117,6 +127,15 @@ class Admin extends Database{
         return [];
     }
 
+    public function getProf(){
+        $query = "SELECT * FROM profTable";
+        $stmt = $this->pdo->prepare($query);
+        if( $stmt->execute()){
+            return $stmt->fetchAll();
+        }
+        return [];
+    }
+
     function showAllSched($id)
     {
         $sql = "SELECT 
@@ -144,11 +163,11 @@ class Admin extends Database{
         return $data;
     }
 
-    public function AddSched($roomid,$DayOfWeek,$start_time,$end_time,$subjectid){
+    public function AddSched($roomid,$DayOfWeek,$start_time,$end_time,$subjectid,$profid){
         
         $query = "INSERT INTO schedule 
-        (roomid,DayOfWeek,start_time,end_time,subjectid)
-VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid)";
+        (roomid,DayOfWeek,start_time,end_time,subjectid,profid)
+VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid,:profid)";
 
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(":roomid",$roomid);
@@ -156,6 +175,7 @@ VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid)";
         $stmt->bindParam(":start_time",$start_time);
         $stmt->bindParam(":end_time",$end_time);
         $stmt->bindParam(":subjectid",$subjectid);
+        $stmt->bindParam(":profid",$profid);
         
         return $stmt->execute();
 

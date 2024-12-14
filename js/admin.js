@@ -126,6 +126,32 @@ $(document).ready(function () {
             data: { id: RoomID},   
             success: function (response) {
                 $('#schedForRoom').html(response);
+                $('.DeleteSched').on("click", function(){
+                    const SID = $(this).data('id');
+                    $.ajax({
+                        url: '../modals/DeleteSched.php',
+                        method: 'GET', 
+                        success: function (response){
+                            $(".ModalManageBody").html(response);
+                            $(".ManageModal").fadeIn(); 
+                            $('#deleteSchedTrue').on("click", function (){   
+                                console.log(SID);     
+                                    $.ajax({
+                                        url: '../Func/deletesched.php',
+                                        method: 'GET',
+                                        data: { id: SID},
+                                        success: function (response) {
+                                        window.location.href = window.location.href;
+                                        }
+                                    });
+                                });
+                    $('#deleteSchedFalse').on("click", function (){
+                        window.location.href = window.location.href;
+                            })
+                        }
+                
+                    })
+                 });
             },
             error: function (xhr, status, error) {
               
@@ -148,6 +174,10 @@ $(document).ready(function () {
                 }
             });
         });
+
+
+        
+        
     });
 
     $('.RoomTable').DataTable({
@@ -258,4 +288,12 @@ $(document).ready(function () {
         });
       
     });
+
+
+
+ 
+
+
+
+
 });
