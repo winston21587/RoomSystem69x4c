@@ -1,16 +1,22 @@
 <?php
 $pageTitle = "main";
 include "../includes/header.php";
-// session_start();
-// if(empty($_SESSION["userid"])){
-//     header("location:../account/Login.php");
-//     exit;
-// }
-// if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Admin"){
-//     header("location:../admin/admin.php");
-//     exit;
-// }
-include "../includes/footer.php";
+require_once "../class/Roomclass.php";
+include "../Func/clean.php";
+session_start();
+if(empty($_SESSION["userid"])){
+    header("location:../account/Login.php");
+    exit;
+}
+if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Admin"){
+    header("location:../admin/admin.php");
+    exit;
+}
+if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Faculty"){
+    header("location:../admin/faculty.php");
+    exit;
+}
+var_dump($_SESSION);
 
 ?>
 
@@ -62,3 +68,5 @@ include "../includes/footer.php";
 
 </html>
 <?php
+include "../includes/footer.php";
+

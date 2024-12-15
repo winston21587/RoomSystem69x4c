@@ -7,7 +7,7 @@
     if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Admin"){
         header("location:../admin/admin.php");
     }
-    if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Staff"){
+    if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Faculty"){
         header("location:../admin/faculty.php");
     }
     if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Student"){

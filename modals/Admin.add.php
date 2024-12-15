@@ -12,6 +12,12 @@ $Admin = new Admin();
                     <option value="<?= $c['id'] ?>"><?= $c['deptName'] ?></option>
                 <?php endforeach; ?>
             </select>
+            <select name="RoomType" id="RoomType">
+                <option value="Lab">Lab</option>
+                <option value="Lec">Lec</option>
+            </select>
+            <input type="text" name="floor" placeholder="Enter floor">
+            <input type="text" name="building" placeholder="Enter Building">
     </div>
         <input class="rounded text-black bg-blue-300 px-4 py-1" type="submit" name="submit" value="add" >
     </form>

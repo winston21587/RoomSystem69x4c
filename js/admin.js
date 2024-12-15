@@ -70,37 +70,48 @@ $(document).ready(function () {
         const RoomID = $(this).data('id');
         const room = $(this).data('room');
         const dept = $(this).data('dept');
+        const floor = $(this).data('floor');
+        const type = $(this).data('type');
+        const building = $(this).data('building');
         $.ajax({
             url: '../modals/Admin.edit.php',
             method: 'GET', 
             data: { id: RoomID,
                 roomname : room ,
-                department : dept},
+                department : dept,
+                floor : floor,
+                RoomType : type,
+                building : building
+                },
                 success: function (response) {
                     $(".ModalManageBody").html(response);
                     $(".ManageModal").fadeIn(); 
-                    // const dept = 'bruh';
-                    //console.log(nameval);
-                    $('form').on('submit', function(){
-                        const room = $('#nameEdit').val();
-                        // const status = $('#statusEdit').val();
-                        const dept = $('#deptEdit').val();
-                        $.ajax({
-                            url: '../Func/editRoom.php',
-                            method: 'GET', 
-                            data: { id: RoomID,
-                                roomname : room ,
-                                department : dept},
-                            success: function (response) {
-                            $(".ManageModal").fadeOut();
-                            window.location.href = window.location.href;
 
-                        },
-                            error: function () {
-                            $(".ModalManageBody").html("<p>Error updating the data</p>");
-                      }
-                    });
-                });
+                //     $('form').on('submit', function(){
+                //         const room = $('#nameEdit').val();
+                //         const dept = $('#deptEdit').val();
+                //         const floorEdit = $('#Roomfloor').val();
+                //         const RTypeEdit = $('#RoomType').val();
+                //         const buildingEdit = $('#RoomBuilding').val();
+                //         $.ajax({
+                //             url: '../Func/editRoom.php',
+                //             method: 'GET', 
+                //             data: { id: RoomID,
+                //                 roomname : room ,
+                //                 department : dept,
+                //                 floor : floorEdit,
+                //                 RoomType : RTypeEdit,
+                //                 building : buildingEdit},
+                //             success: function (response) {
+                //             $(".ManageModal").fadeOut();
+                //             window.location.href = window.location.href;
+
+                //         },
+                //             error: function () {
+                //             $(".ModalManageBody").html("<p>Error updating the data</p>");
+                //       }
+                //     });
+                // });
               },
               error: function () {
                 $(".ModalManageBody").html("<p>Error loading data</p>");
@@ -113,9 +124,8 @@ $(document).ready(function () {
         $(".ManageModal").fadeOut();
       });
 
+      
     $('.checkSched').on('click', function() {
-        // console.log("ASs");
-        // window.location.href = window.location.href;
         const RoomID = $(this).data('id');
         const NameOfRoom = $(this).data('name');
         $('.ScheduleText').html(" Schedules for " + NameOfRoom);
@@ -126,47 +136,14 @@ $(document).ready(function () {
             data: { id: RoomID},   
             success: function (response) {
                 $('#schedForRoom').html(response);
-                $('.DeleteSched').on("click", function(){
-                    const SID = $(this).data('id');
-                    $.ajax({
-                        url: '../modals/DeleteSched.php',
-                        method: 'GET', 
-                        success: function (response){
-                            $(".ModalManageBody").html(response);
-                            $(".ManageModal").fadeIn(); 
-                            $('#deleteSchedTrue').on("click", function (){   
-                                console.log(SID);     
-                                    $.ajax({
-                                        url: '../Func/deletesched.php',
-                                        method: 'GET',
-                                        data: { id: SID},
-                                        success: function (response) {
-                                        window.location.href = window.location.href;
-                                        }
-                                    });
-                                });
-                    $('#deleteSchedFalse').on("click", function (){
-                        window.location.href = window.location.href;
-                            })
-                        }
-                
-                    })
-                 });
-            },
-            error: function (xhr, status, error) {
-              
-                console.error('Error:', error);
-                $('#RoomForDept').html('<p>Failed to load table. Please try again.</p>');
-            }
-            
-        });
-        
-        $('#schedInsert').on('click', function(){
+
+            $('#schedInsert').on('click', function(){
             $.ajax({
                 url: '../modals/Admin.sched.php',
                 method: 'GET', 
                 data: { id: RoomID,
-                    name: NameOfRoom
+                    name: NameOfRoom,
+                    roomid: RoomID
                  },
                 success: function (response) {
                     $(".ModalManageBody").html(response);
@@ -174,6 +151,11 @@ $(document).ready(function () {
                 }
             });
         });
+            }
+            
+        });
+        
+
 
 
         
@@ -183,6 +165,13 @@ $(document).ready(function () {
     $('.RoomTable').DataTable({
         paging: true,
         searching: true,
+        lengthMenu: [5, 10, 25, 50],
+        stateSave: true,
+        "bDestroy": true
+    });
+
+    $('.SchedTable').DataTable({
+        paging: true,
         lengthMenu: [5, 10, 25, 50],
         stateSave: true,
         "bDestroy": true
@@ -209,43 +198,45 @@ $(document).ready(function () {
                         success: function (response) {
                             $("#schedForRoom").html(response);
                             $('.requestBTN').on('click', function (){
-                                const sender = $(this).data('name');
                                 const SchedID = $(this).data('id');
-                                console.log(sender);
+                                const nameofReqto = $(this).data('send');
+                                const reqto = $(this).data('reqto');
+                                const facID = $(this).data('facid');
+                                console.log(facID);
+                                
                                 $.ajax({
                                     url: '../modals/requestComfirmation.php',
                                     method: 'GET', 
-                                    data: { dept: selectedValue,
-                                            username : sender
+                                    data: {
+                                            requestTo : nameofReqto,
                                      },
                                     success: function (response){
                                         $(".ModalManageBody").html(response);
                                         $(".ManageModal").fadeIn(); 
-                                        $('#facultyName').on('change', function (){
-                                            const facultyID = $(this).val();
-                                            console.log("dacul idi is: " + facultyID);
-                                        
                                         $('#RequestAproved').on("click", function (){
-                                            // alert("request Sent");
+                                            const dateOfUse = $('#DateOfUse').val();
+                                            requestBy = facID;
+                                            console.log(dateOfUse + ' . dateofuse');
+                                            console.log(requestBy + ' . requestby');
+                                            console.log(SchedID + ' . scheduleid');
+                                            console.log(reqto + ' . request to');
 
                                                         $.ajax({
                                                             url: '../Func/requestSender.php',
                                                             method: 'GET',
-                                                            data: { facultyID: facultyID,
-                                                                    sender : sender,
-                                                                    SchedID : SchedID
+                                                            data: { 
+                                                                    requestTo: reqto,
+                                                                    requestBy : requestBy,
+                                                                    SchedID : SchedID,
+                                                                    dateOfUse: dateOfUse
                                                              },
                                                             success: function (response) {
-                                                                console.log("sent: " + facultyID + " " + sender + " " + SchedID );     
                                                 window.location.href = window.location.href;
 
                                                             }
                                                         });
                                                     });
-                                                } )
-                                            $('#RequestDenied').on("click", function (){
-                                                window.location.href = window.location.href;
-                                            })
+                                                
 
                                     }
                                 })

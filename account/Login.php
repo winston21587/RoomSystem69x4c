@@ -25,31 +25,38 @@ if(isset($_SESSION["userid"])){
 $acc = new Account();
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
-    $acc->email = clean($_POST['email']);
-    $acc->password = clean($_POST['password']);
+    $email = clean($_POST['email']);
+    $password = clean($_POST['password']);
 
-    $loginResult = $acc->login();
+    $loginResult = $acc->login($email,$password);
 
-    if ($loginResult['success']) {
-        $_SESSION['userid'] = $acc->id;
-        $_SESSION['username'] = $acc->username;
-        $_SESSION['email'] = $acc->email;
-        $_SESSION['course'] = $acc->course;
-        $_SESSION['section'] = $acc->section;
-        $_SESSION['role'] = $acc->role;
+    if (!empty($loginResult)) {
+        $_SESSION['userid'] = $loginResult['userId'];
+        $_SESSION['username'] = $loginResult['username'];
+        $_SESSION['email'] = $loginResult['email'];
+        $_SESSION['role'] = $loginResult['role'];
+        $_SESSION['DeptID'] = $loginResult['DeptID'];
+        $_SESSION['lastName'] = $loginResult['lastName'];
+        $_SESSION['firstName'] = $loginResult['firstName'];
+        $_SESSION['middleName'] = $loginResult['middleName'];
+        $_SESSION['facultyId'] = $loginResult['facultyId'];
+        $_SESSION['course'] = $loginResult['CourseID'];
+        $_SESSION['section'] = $loginResult['Section'];
 
         if ($_SESSION["role"] == "Admin") {
             header("location:../admin/admin.php");
             exit;
-        } elseif ($_SESSION["role"] == "Staff") {
+        } elseif ($_SESSION["role"] == "Faculty") {
             header("location:../admin/faculty.php");
             exit;
-        } else {
+        } elseif($_SESSION["role"] == "Student") {
             header("location:../main/MainPageUI.php");
             exit;
+        }else{
+         $errorMessage = 'failed to fetch roles';    
         }
     } else {
-        $errorMessage = $loginResult['error'];
+        $errorMessage = 'failed to login';
     }
 }
 
@@ -91,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
     </div>
 </div>
 
-<script>
+<!-- <script>
     document.getElementById('loginForm').addEventListener('submit', function (event) {
         let isValid = true;
 
@@ -118,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
             event.preventDefault();
         }
     });
-</script>
+</script> -->
 
 </body>
 </html>

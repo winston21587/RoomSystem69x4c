@@ -10,8 +10,16 @@ $pageTitle = "Admin";
 include "../includes/header.php";
 session_start();
 
-if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Staff"){
+if(empty($_SESSION["userid"])){
     header("location:../account/Login.php");
+    exit;
+}
+if($_SESSION['role'] == "Student"){
+    header("location:../main/MainPageUI.php");
+    exit;
+}
+if($_SESSION['role'] == "Admin"){
+    header("location:../admin/admin.php");
     exit;
 }
 
@@ -48,42 +56,28 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Staff"){
         <table class=" RoomTable display">
             <thead>
                 <tr>
-                    <th>Request</th>
-                    <th>Name</th>
-                    <th>Department</th>
+                    <th>Requested By</th>
                     <th>Room</th>
-                    <th>Schedule</th>
+                    <th>schedule</th>
+                    <th>Date Requested</th>
+                    <th>Date to Use</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($Admin->displayRequest($_SESSION['username']) as $d): ?>
-                <tr>
-                    <td><?= ($d['Name'] == $_SESSION['username']) ? "Accept" : "Sending To"; ?></td>
-                    <td><?= ($d['Name'] == $_SESSION['username']) ? $d['sender'] : $d['Name'] ?></td>
-                    <td><?= $d['Department'] ?></td>
-                    <td><?= $d['Room'] ?></td>
-                    <td><?= $d['start']. " to ".$d['end'] ?></td>
-                    <td>
-                        <span class="<?php 
-    if ($d['status'] === 'Approved') echo 'bg-green-500 text-white text-center    font-bold'; 
-    elseif ($d['status'] === 'Rejected') echo 'bg-red-500 text-white text-center  font-bold'; 
-    elseif ($d['status'] === 'Pending') echo 'bg-yellow-500 text-black text-center  font-bold'; 
-?>  px-2 py-2 rounded">
-
-                            <?= $d['status'] ?>
-                        </span>
-                    </td>
-
-                    <td>
-                        <?php if($d['Name'] == $_SESSION['username']): ?>
-                        <button data-id="<?= $d['id'] ?>"
-                            class="AcceptRequestBTN bg-blue-500 rounded p-2 text-white">Accept</button>
-                        <?php endif; ?>
-                    </td>
-
-                </tr>
+                <?php foreach($Admin->displayRequest($_SESSION['facultyId']) as $d): ?>
+                    <tr>
+                        <td><?= $d['professor'] ?></td>
+                        <td><?= $d['Roomname'] ?></td>
+                        <td><button>check</button></td>
+                        <td><?= $d['DateRequested'] ?></td>
+                        <td><?= $d['DateOfUse'] ?></td>
+                        <td class=" p-3 rounded
+                        <?= $d['status'] == 'Approved' ? 'bg-green-500 text-white' : ($d['status'] == 'Pending' ? 'bg-yellow-500 text-white' : 'bg-red-500 text-white') ?>"
+                         ><?= $d['status'] ?></td>
+                        <td><button class="bg-blue-500 rounded p-3 AcceptRequestBTN" data-id="<?= $d['id'] ?>" >accept</button></td>
+                    </tr>
                 <?php endforeach;?>
             </tbody>
         </table>
@@ -107,7 +101,7 @@ if(empty($_SESSION["userid"]) || $_SESSION['role'] != "Staff"){
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="mb-4 RoomDept ">
+                    <div class="mb-4 RoomDept">
 
                     </div>
 
