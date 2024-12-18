@@ -291,7 +291,7 @@ VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid,:profid,:semester,:
         LEFT JOIN room ON room.id = schedule.roomid
         LEFT JOIN faculty ON faculty.id = requests.RequestedBy
         LEFT JOIN users ON users.id = faculty.UserID
-        WHERE requests.RespondedBy = :responder;
+        WHERE requests.RespondedBy = :responder
         ";
 
         $stmt = $this->pdo->prepare($query);
@@ -308,8 +308,8 @@ VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid,:profid,:semester,:
         }    
         $query = "UPDATE requests SET status = :statuse WHERE request_id = :id";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindParam(":statuse", $status, PDO::PARAM_STR);
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->bindParam(":statuse", $status, PDO::PARAM_STR);
         
         if ($stmt->execute()) {
             return true;
@@ -319,5 +319,60 @@ VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid,:profid,:semester,:
         }
     }
     
+    public function sentBox($id){
+        $query = "SELECT 
+        requests.request_id as id,
+		requests.DateRequested as DateRequested,
+        requests.DateOfUse as DateOfUse,
+        schedule.id as sched,
+        requests.status as status,
+        room.RoomName as Roomname,
+        CONCAT(users.firstName,' ',users.lastName) as professor,
+        room.id as roomid
+        FROM requests
+        LEFT JOIN schedule ON schedule.id = requests.schedID
+        LEFT JOIN room ON room.id = schedule.roomid
+        LEFT JOIN faculty ON faculty.id = requests.RespondedBy
+        LEFT JOIN users ON users.id = faculty.UserID
+        WHERE requests.RequestedBy = :id";
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+        if($stmt->execute()){
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return [];
+
+    }
+
+    public function ShowSched($id){
+        $query = "SELECT 
+        schedule.DayOfWeek,
+        schedule.start_time,
+        schedule.end_time,
+        subject.SubName as subjectN,
+        CONCAT(users.firstName,' ',users.lastName) as professor,
+        schedule.semester as semester,
+        schedule.schoolYear as schoolYear,
+        schedule.status as status,
+        faculty.id as facultyID
+        FROM schedule 
+        LEFT JOIN subject ON subject.id = schedule.subjectid 
+        LEFT JOIN faculty ON faculty.id = schedule.profid
+        LEFT JOIN users ON users.id = faculty.UserID
+        WHERE schedule.roomid = :id";
+
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+        if($stmt->execute()){
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return [];
+
+    }
 
 }

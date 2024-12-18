@@ -177,6 +177,7 @@ $(document).ready(function () {
         "bDestroy": true
     });
 
+
     $('.FacultyDepartment').on("change", function (){
         const selectedValue = $(this).val();
         console.log("value: " + selectedValue);
@@ -280,9 +281,68 @@ $(document).ready(function () {
       
     });
 
+    // const loadTabContent = (url, tabElement) => {
+    //     if (!tabElement.data("loaded")) {
+    //       $(".requestTable").load(url, function (response, status, xhr) {
+    //         if (status === "error") {
+    //           $(".requestTable").html(`<p>Error loading content: ${xhr.status} ${xhr.statusText}</p>`);
+    //         } else {
+    //           tabElement.data("loaded", true);
+    //         }
+    //       });
+    //     }
+    //   };
+      
+    //   const defaultTab = $('.tabBTN.activeTab');
+    //   const defaultUrl = defaultTab.data('url');
+    //   loadTabContent(defaultUrl, defaultTab);
+      
+    //   $(".tabBTN").on("click", function () {
+    //     const url = $(this).data("url");
+    //     $(".tabBTN").removeClass("activeTab border-b-4 border-black/70 rounded");
+    //     $(this).addClass("activeTab border-b-4 border-black/70 rounded");
+      
+    //     if (!$(this).data("loaded")) {
+    //       loadTabContent(url, $(this));
+    //     } else {
+    //       $(".requestTable").html("Content already loaded.");
+    //     }
+    //   });
 
 
- 
+
+
+    if($('body').hasClass('reloaded')){
+        $(".requestTable").load('../tables/inbox.php', function (response, status, xhr) {
+            if (status === "error") {
+              $(".requestTable").html(`<p>Error loading content: ${xhr.status} ${xhr.statusText}</p>`);
+            } else {
+              
+                $('body').removeClass('reloaded');
+            }
+        });
+    }
+    $(".tabBTN").on("click", function () {
+        const url = $(this).data("url");
+        $(".tabBTN").removeClass("activeTab border-b-4 border-black/70 rounded");
+        $(this).addClass("activeTab border-b-4 border-black/70 rounded");
+
+        $(".requestTable").load(url, function (response, status, xhr) {
+            if (status === "error") {
+              $(".requestTable").html(`<p>Error loading content: ${xhr.status} ${xhr.statusText}</p>`);
+            } 
+        });
+      });
+
+
+      
+      
+      
+      
+      
+      
+      
+      
 
 
 

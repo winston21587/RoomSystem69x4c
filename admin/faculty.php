@@ -44,43 +44,23 @@ if($_SESSION['role'] == "Admin"){
 <!DOCTYPE html>
 <html lang="en">
 
-<body class="w-full h-full">
+<body class="w-full h-full reloaded">
 
     <div class="flex flex-row w-full p-6 px-16 justify-between mb-4 text-center items-center shadow-lg ">
         <h1 class="text-4xl font-bold text-black uppercase">Faculty</h1>
         <h1 class="text-4xl text-black uppercase"><?= $_SESSION['username'] ?></h1>
         <button class="px-4 py-2 bg-black text-white rounded"><a href="../account/logout.php">Logout</a></button>
     </div>
-    <div class="inbox p-5 px-12">
-        <h1 class="text-4xl text-center text-gray-800 mt-10">Inbox</h1>
-        <table class=" RoomTable display">
-            <thead>
-                <tr>
-                    <th>Requested By</th>
-                    <th>Room</th>
-                    <th>schedule</th>
-                    <th>Date Requested</th>
-                    <th>Date to Use</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($Admin->displayRequest($_SESSION['facultyId']) as $d): ?>
-                    <tr>
-                        <td><?= $d['professor'] ?></td>
-                        <td><?= $d['Roomname'] ?></td>
-                        <td><button>check</button></td>
-                        <td><?= $d['DateRequested'] ?></td>
-                        <td><?= $d['DateOfUse'] ?></td>
-                        <td class=" p-3 rounded
-                        <?= $d['status'] == 'Approved' ? 'bg-green-500 text-white' : ($d['status'] == 'Pending' ? 'bg-yellow-500 text-white' : 'bg-red-500 text-white') ?>"
-                         ><?= $d['status'] ?></td>
-                        <td><button class="bg-blue-500 rounded p-3 AcceptRequestBTN" data-id="<?= $d['id'] ?>" >accept</button></td>
-                    </tr>
-                <?php endforeach;?>
-            </tbody>
+    <div class="inbox p-5 px-12 flex-col w-full">
+        <div class=" flex flex-row mt-10 justify-center">    
+            <h1 class="text-4xl text-center text-gray-800 mr-8">Requests</h1>
+            <button class="text-3xl text-center text-gray-800 mr-5 tabBTN activeTab border-b-4 border-black/70 rounded" data-url="../tables/inbox.php">Inbox</button>
+            <button class="text-3xl text-center text-gray-800 tabBTN" data-url="../tables/sentbox.php">Sentbox</button>
+        </div>
+        <table class="requestTable SentBoxTable display">
+
         </table>
+       
     </div>
     <div class="table-content w-full flex flex-row justify-around pb-7">
         <div class="inbox">
