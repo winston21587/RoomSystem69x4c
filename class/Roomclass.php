@@ -90,11 +90,20 @@ class Room extends Database
 
     function showNewSched($id)
     {
-        $sql = "SELECT * FROM schedule 
-        LEFT OUTER JOIN room ON (schedule.roomid = room.id)
-        LEFT OUTER JOIN subject ON (subject.id = schedule.subjectid)
-        LEFT OUTER JOIN proftable ON (proftable.id = schedule.profid) 
-        WHERE department = :id";
+        $sql = "SELECT * 
+                FROM schedule
+                LEFT OUTER JOIN room ON schedule.roomid = room.id
+                LEFT OUTER JOIN subject ON subject.id = schedule.subjectid
+                RIGHT JOIN (
+                    SELECT 
+                        users.id AS userId,
+                        users.lastName AS profName,
+                        faculty.UserID AS facultyId,
+                        faculty.id AS profId
+                    FROM users 
+                    JOIN faculty ON users.id = faculty.userId
+                ) AS user_faculty ON user_faculty.profId = schedule.profid
+                WHERE department = :id";
 
         $query = $this->pdo->prepare($sql);
 

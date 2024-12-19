@@ -16,7 +16,7 @@ if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Faculty"){
     header("location:../admin/faculty.php");
     exit;
 }
-var_dump($_SESSION);
+// var_dump($_SESSION);
 
 ?>
 
@@ -30,7 +30,7 @@ var_dump($_SESSION);
 
     <div class="button-group">
 
-        <button id="dp-btn" class="btn dp-btn" data-bg="4">CCS</button>
+        <button id="dp-btn" class="btn dp-btn" data-bg="8">CCS</button>
         <button id="dp-btn" class="btn dp-btn" data-bg="7">CSM</button>
         <button id="dp-btn" class="btn dp-btn" data-bg="Engineering">Engineering</button>
         <button id="dp-btn" class="btn dp-btn" data-bg="CLA">CLA</button>

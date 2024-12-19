@@ -55,6 +55,8 @@ $array = $roomObj->showNewSched($id);
 <body>
     <a href="MainPageUI.php"><--< /a>
 
+            <?php echo $id ?>
+            
             <table border="1">
                 <tr>
                     <th>Room Id</th>
