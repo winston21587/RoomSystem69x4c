@@ -3,16 +3,17 @@ $pageTitle = "main";
 include "../includes/header.php";
 require_once "../class/Roomclass.php";
 include "../Func/clean.php";
+
 session_start();
-if(empty($_SESSION["userid"])){
+if (empty($_SESSION["userid"])) {
     header("location:../account/Login.php");
     exit;
 }
-if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Admin"){
+if (isset($_SESSION["userid"]) && $_SESSION["role"] == "Admin") {
     header("location:../admin/admin.php");
     exit;
 }
-if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Faculty"){
+if (isset($_SESSION["userid"]) && $_SESSION["role"] == "Faculty") {
     header("location:../admin/faculty.php");
     exit;
 }
@@ -25,8 +26,13 @@ if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Faculty"){
 <html lang="en">
 
 <body>
-    <h1 class="">Select Building</h1>
-    <a href="../account/logout.php">logout</a>
+    <div class="flex flex-row w-full p-6 px-16 justify-between mb-4 text-center items-center shadow-lg ">
+        <h1 class="text-4xl font-bold text-black uppercase">USER</h1>
+        <h1 class="text-4xl text-black uppercase"><?= $_SESSION['username'] ?></h1>
+        <button class="px-4 py-2 bg-black text-white rounded"><a href="../account/logout.php">Logout</a></button>
+    </div>
+
+    <h1 class="text-4xl font-bold text-black uppercase text-center">SELECT BUILDING</h1>
 
     <div class="button-group">
 
@@ -48,9 +54,9 @@ if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Faculty"){
         <button id="dp-btn" class="btn dp-btn" data-bg="CSWCD">CSWCD</button>
         <button id="dp-btn" class="btn dp-btn" data-bg="CTE">CTE</button>
     </div>
-    
+
     <script>
-                // Function to redirect with a fixed value
+        // Function to redirect with a fixed value
         function redirectToPage(departmentId) {
             window.location.href = `page2.php?id=${encodeURIComponent(departmentId)}`;
         }
@@ -62,11 +68,9 @@ if(isset($_SESSION["userid"]) && $_SESSION["role"] == "Faculty"){
                 window.location.href = `useRoom.php?id=${encodeURIComponent(departmentId)}`;
             });
         });
-
     </script>
 </body>
 
 </html>
 <?php
 include "../includes/footer.php";
-

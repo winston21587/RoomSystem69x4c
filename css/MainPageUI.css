@@ -51,16 +51,15 @@
         }
 
         .button-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.7);
-    padding: 20px;
-    border-radius: 8px;
-    outline: 1px solid rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-}
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
 
         .btn[data-bg] {
             background-image: url('./assets/placeholder.jpg');
@@ -148,3 +147,4 @@
     outline: 3px dashed #007bff;
         outline-offset: 4px;
 }
+
