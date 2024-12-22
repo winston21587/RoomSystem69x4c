@@ -10,35 +10,27 @@ $pageTitle = "Admin";
 include "../includes/header.php";
 session_start();
 
-if(empty($_SESSION["userid"])){
+if (empty($_SESSION["userid"])) {
     header("location:../account/Login.php");
     exit;
 }
-if($_SESSION['role'] == "Student"){
+if ($_SESSION['role'] == "Student") {
     header("location:../main/MainPageUI.php");
     exit;
 }
-if($_SESSION['role'] == "Admin"){
+if ($_SESSION['role'] == "Admin") {
     header("location:../admin/admin.php");
     exit;
 }
 
-    $Admin = new Admin();
-    $Room = new Room();
-    // var_dump($_POST);
-    // var_dump($_GET);
-    // var_dump($_SESSION['w']);
-    // var_dump($Admin);
-    $id;
-    // $depart = NULL;
-
-    
-   
-
-
-
-
-
+$Admin = new Admin();
+$Room = new Room();
+// var_dump($_POST);
+// var_dump($_GET);
+// var_dump($_SESSION['w']);
+// var_dump($Admin);
+$id;
+// $depart = NULL;
 ?>
 
 <!DOCTYPE html>
@@ -48,20 +40,21 @@ if($_SESSION['role'] == "Admin"){
 
     <div class="flex flex-row w-full p-6 px-16 justify-between mb-4 text-center items-center shadow-lg ">
         <h1 class="text-4xl font-bold text-black uppercase">Faculty</h1>
-        <h1 class="text-4xl text-black uppercase"><?= $_SESSION['username'] ?></h1>
+        <h1 class="text-4xl text-black uppercase"><?= $_SESSION['lastName'] . ', ' . strtoupper(substr($_SESSION['firstName'], 0, 1)) . '.'?></h1>
         <button class="px-4 py-2 bg-black text-white rounded"><a href="../account/logout.php">Logout</a></button>
     </div>
-    <div class="inbox p-5 px-12 flex-col w-full">
-        <div class=" flex flex-row mt-10 justify-center">    
+
+    <div class="inbox px-12 flex-col w-full mb-10">
+        <div class=" flex flex-row mt-10 justify-center">
             <h1 class="text-4xl text-center text-gray-800 mr-8">Requests</h1>
             <button class="text-3xl text-center text-gray-800 mr-5 tabBTN activeTab border-b-4 border-black/70 rounded" data-url="../tables/inbox.php">Inbox</button>
             <button class="text-3xl text-center text-gray-800 tabBTN" data-url="../tables/sentbox.php">Sentbox</button>
         </div>
-        <table class="requestTable SentBoxTable display">
 
+        <table class="requestTable SentBoxTable display mx-auto mt-6">
         </table>
-       
     </div>
+
     <div class="table-content w-full flex flex-row justify-around pb-7">
         <div class="inbox">
             <h1 class="text-4xl text-center text-gray-800 mt-10">Faculty Room Schedule</h1>
@@ -76,11 +69,12 @@ if($_SESSION['role'] == "Admin"){
                             required>
                             <option disabled selected>Choose Department</option>
 
-                            <?php foreach($Admin->getDept() as $c): ?>
-                            <option value="<?= $c['id'] ?>"><?= $c['deptName'] ?></option>
+                            <?php foreach ($Admin->getDept() as $c): ?>
+                                <option value="<?= $c['id'] ?>"><?= $c['deptName'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
+                    
                     <div class="mb-4 RoomDept">
 
                     </div>
@@ -97,13 +91,13 @@ if($_SESSION['role'] == "Admin"){
 
             <table>
                 <thead>
-                    <tr class="bg-gray-100">
-                        <th class="px-4 py-2 text-left border-b border-gray-300">Day</th>
-                        <th class="px-4 py-2 text-left border-b border-gray-300">Start Time</th>
-                        <th class="px-4 py-2 text-left border-b border-gray-300">End Time</th>
-                        <th class="px-4 py-2 text-left border-b border-gray-300">Subject</th>
-                        <th>Professor</th>
-                        <th>Submit</th>
+                    <tr class="bg-red-300">
+                        <th class="px-4 py-2 text-center">Day</th>
+                        <th class="px-4 py-2 text-center">Start Time</th>
+                        <th class="px-4 py-2 text-center">End Time</th>
+                        <th class="px-4 py-2 text-center">Subject</th>
+                        <th class="px-4 py-2 text-center">Professor</th>
+                        <th class="px-4 py-2 text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody id="schedForRoom">

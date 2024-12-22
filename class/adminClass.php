@@ -191,7 +191,8 @@ class Admin extends Database{
         schedule.semester as semester,
         schedule.schoolYear as schoolYear,
         schedule.status as status,
-        faculty.id as facultyID
+        faculty.id as facultyID,
+        faculty.userID as userID
         FROM schedule 
         LEFT JOIN subject ON subject.id = schedule.subjectid 
         LEFT JOIN faculty ON faculty.id = schedule.profid
