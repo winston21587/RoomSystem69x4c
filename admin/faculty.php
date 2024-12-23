@@ -40,11 +40,11 @@ $id;
 
     <div class="flex flex-row w-full p-6 px-16 justify-between mb-4 text-center items-center shadow-lg ">
         <h1 class="text-4xl font-bold text-black uppercase">Faculty</h1>
-        <h1 class="text-4xl text-black uppercase"><?= $_SESSION['lastName'] . ', ' . strtoupper(substr($_SESSION['firstName'], 0, 1)) . '.'?></h1>
+        <h1 class="text-4xl text-black uppercase hidden sm:block"><?= $_SESSION['lastName'] . ', ' . strtoupper(substr($_SESSION['firstName'], 0, 1)) . '.' ?></h1>
         <button class="px-4 py-2 bg-black text-white rounded"><a href="../account/logout.php">Logout</a></button>
     </div>
 
-    <div class="inbox px-12 flex-col w-full mb-10">
+    <div class="inbox px-12 w-full mb-10">
         <div class=" flex flex-row mt-10 justify-center">
             <h1 class="text-4xl text-center text-gray-800 mr-8">Requests</h1>
             <button class="text-3xl text-center text-gray-800 mr-5 tabBTN activeTab border-b-4 border-black/70 rounded" data-url="../tables/inbox.php">Inbox</button>
@@ -55,15 +55,13 @@ $id;
         </table>
     </div>
 
-    <div class="table-content w-full flex flex-row justify-around pb-7">
-        <div class="inbox">
+    <div class="table-content flex justify-center flex-col sm:flex-row pb-7">
+        <div class="inbox w-full max-w-md mb-8 sm:mb-0 sm:w-1/2">
             <h1 class="text-4xl text-center text-gray-800 mt-10">Faculty Room Schedule</h1>
-            <div class="max-w-md mx-auto mt-8 bg-white p-6 rounded-lg shadow-lg">
+            <div class="mt-8 bg-white p-6 rounded-lg shadow-lg">
                 <form method="POST">
-
                     <div class="mb-4">
-                        <label for="FacultyDepartment"
-                            class="block text-lg font-medium text-gray-700">Department</label>
+                        <label for="FacultyDepartment" class="block text-lg font-medium text-gray-700">Department</label>
                         <select name="FacultyDepartment" id="FacultyDepartment"
                             class="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600 FacultyDepartment"
                             required>
@@ -74,22 +72,18 @@ $id;
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    
-                    <div class="mb-4 RoomDept">
 
-                    </div>
-
+                    <div class="mb-4 RoomDept"></div>
                 </form>
-
             </div>
         </div>
 
-        <div class="table-2 mt-4">
-            <div class="table-2-head flex w-full justify-between px-4 items-center p-4">
-                <h2 class="text-4xl  ScheduleText">Schedules</h2>
+        <div class="table-2 w-full sm:w-1/2 max-w-5xl">
+            <div class="table-2-head flex items-center justify-center w-full px-4 p-4 h-20">
+                <h2 class="text-4xl ScheduleText text-center">Schedules</h2>
             </div>
 
-            <table>
+            <table class="w-full border-collapse border border-gray-300">
                 <thead>
                     <tr class="bg-red-300">
                         <th class="px-4 py-2 text-center">Day</th>
@@ -101,11 +95,12 @@ $id;
                     </tr>
                 </thead>
                 <tbody id="schedForRoom">
-
+                    <!-- Dynamic content here -->
                 </tbody>
             </table>
         </div>
     </div>
+
 
     <div id="customModalAdmin"
         class="AddRoomModal hidden fixed inset-0 bg-black bg-opacity-40 z-50  justify-center items-center backdrop-blur-sm">

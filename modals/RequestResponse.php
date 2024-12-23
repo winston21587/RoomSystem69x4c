@@ -2,7 +2,7 @@
 <div>
     <h1 class="requestMSG" ></h1>
     <select name="statusRequest" id="statusRequest">
-        <option selected disabled>--Select Approval-- </option>
+        <option selected disabled>--Select Response-- </option>
         <option value="Approved">Approve</option>
         <option value="Rejected">Reject</option>
     </select>
