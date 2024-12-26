@@ -335,10 +335,25 @@ $(document).ready(function () {
       });
 
 
-      
-      
-      
-      
+
+
+      $('.ScheduleBTN').on('click', function (){
+        id = $(this).data("sched");
+        console.log(id);
+        $.ajax({
+            url: '../modals/scheduleInfo.php',
+            method: 'GET', 
+            data: { id: id },
+                success: function (response) {
+                    $(".ModalManageBody").html(response);
+                    $(".ManageModal").fadeIn(); 
+              },
+              error: function () {
+                $(".ModalManageBody").html("<p>Error loading data</p>");
+                $(".ManageModal").fadeIn();
+              }
+        })
+    })
       
       
       

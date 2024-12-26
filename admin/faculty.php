@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 require_once "../class/adminClass.php";
 require_once "../class/Roomclass.php";
 include "../Func/clean.php";
-$pageTitle = "Admin";
+$pageTitle = "Faculty";
 include "../includes/header.php";
 session_start();
 

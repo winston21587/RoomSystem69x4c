@@ -22,3 +22,4 @@ $Admin = new Admin();
         <input class="rounded text-black bg-blue-300 px-4 py-1" type="submit" name="submit" value="add" >
     </form>
 </div>
+

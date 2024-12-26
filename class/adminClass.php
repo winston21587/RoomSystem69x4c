@@ -118,8 +118,32 @@ class Admin extends Database{
     }
     
 
-    public function EmptyAll(){
+    public function DisplaySchedID($id){
+        $sql = "SELECT 
+        schedule.id as SchedID,
+        schedule.DayOfWeek as DayOfWeek,
+        schedule.start_time as start_time, 
+        schedule.end_time as end_time,
+        subject.SubName as subjectN,
+        room.RoomName as RoomName,
+        room.RoomType as RoomType,
+        room.Building as Building
+        FROM schedule 
+        LEFT JOIN subject ON subject.id = schedule.subjectid 
+        LEFT JOIN room ON room.id = schedule.roomid
+        WHERE schedule.id = :id
+        ";
+        $query = $this->pdo->prepare($sql);
+
+        $query->bindParam(":id", $id);
         
+
+        $data = null;
+        if($query->execute()){
+            $data = $query->fetch(PDO::FETCH_ASSOC);
+        }
+
+        return $data;        
     }
 
     public function CheckUnqRoom($roomname){
@@ -198,6 +222,7 @@ class Admin extends Database{
         LEFT JOIN faculty ON faculty.id = schedule.profid
         LEFT JOIN users ON users.id = faculty.UserID
         WHERE schedule.roomid = :id
+        ORDER BY DayOfWeek
         ";
         $query = $this->pdo->prepare($sql);
 
@@ -259,8 +284,8 @@ VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid,:profid,:semester,:
     }
 
     public function SendRequest($RequestedBy,$RespondedBy,$schedID,$DateRequested,$DateOfUse){
-        $query = "INSERT INTO requests (RequestedBy, RespondedBy, schedID, DateRequested, DateOfUse) 
-        VALUES (:RequestedBy, :RespondedBy, :schedID, :DateRequested, :DateOfUse)";
+        $query = "INSERT INTO requests (RequestedBy, RespondedBy, schedID, DateRequested, DateOfUse,DateResponded) 
+        VALUES (:RequestedBy, :RespondedBy, :schedID, :DateRequested, :DateOfUse,CURRENT_TIMESTAMP)";
         $stmt = $this->pdo->prepare($query);
 
         $stmt->bindParam(':RequestedBy',$RequestedBy);   
@@ -279,6 +304,7 @@ VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid,:profid,:semester,:
         requests.request_id as id,
 		requests.DateRequested as DateRequested,
 		requests.RequestedBy as RequestedBy,
+		requests.schedID as schedID,
         requests.DateOfUse as DateOfUse,
         schedule.DayOfWeek as DayOfweek,
         schedule.start_time as start,
@@ -348,32 +374,5 @@ VALUES  (:roomid,:DayOfWeek,:start_time,:end_time,:subjectid,:profid,:semester,:
 
     }
 
-    public function ShowSched($id){
-        $query = "SELECT 
-        schedule.DayOfWeek,
-        schedule.start_time,
-        schedule.end_time,
-        subject.SubName as subjectN,
-        CONCAT(users.firstName,' ',users.lastName) as professor,
-        schedule.semester as semester,
-        schedule.schoolYear as schoolYear,
-        schedule.status as status,
-        faculty.id as facultyID
-        FROM schedule 
-        LEFT JOIN subject ON subject.id = schedule.subjectid 
-        LEFT JOIN faculty ON faculty.id = schedule.profid
-        LEFT JOIN users ON users.id = faculty.UserID
-        WHERE schedule.roomid = :id";
-
-        $stmt = $this->pdo->prepare($query);
-
-        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-
-        if($stmt->execute()){
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-        return [];
-
-    }
 
 }

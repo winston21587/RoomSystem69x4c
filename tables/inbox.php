@@ -27,7 +27,7 @@ $FID = $_SESSION['facultyId'];
         <tr>
             <td class="px-4 py-2 text-center"><?= $d['professor'] ?></td>
             <td class="px-4 py-2 text-center"><?= $d['Roomname'] ?></td>
-            <td class="px-4 py-2 text-center"><button>check</button></td>
+            <td class="px-4 py-2 text-center"><button class="ScheduleBTN" data-sched="<?= $d['schedID'] ?>" >check</button></td>
             <td class="px-4 py-2 text-center"><?= $d['DateRequested'] ?></td>
             <td class="px-4 py-2 text-center"><?= $d['DateOfUse'] ?></td>
             <td class="px-4 py-2 text-center">

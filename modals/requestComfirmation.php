@@ -16,7 +16,7 @@ if (isset($_GET['requestTo'])) {
 <h1 class="text-xl font-semibold text-gray-800 mb-4 RequestMSG">Send Request to <?= $requestTo ?>?</h1>
 <!-- <?= var_dump($_GET) ?> -->
 <div class="mb-4">
-    <input type="date" name="DateOfUse" id="DateOfUse">
+    <input type="date" name="DateOfUse" id="DateOfUse" value="<?= date("Y-m-d"); ?>">
 </div>
 <div class="flex justify-center space-x-3 ">
     <button id="RequestAproved" class="px-4 py-2 bg-green-500 text-white rounded-md shadow hover:bg-green-600">Yes</button>
