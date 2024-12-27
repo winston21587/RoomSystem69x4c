@@ -124,9 +124,12 @@ if (isset($_POST["submit"])  && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST["
 
 <body class="w-full h-screen">
 
-    <div class="flex flex-row w-full p-6 px-4 sm:px-16 justify-between mb-4 text-center items-center shadow-lg">
-        <h1 class="text-2xl sm:text-4xl font-bold text-black uppercase">Admin</h1>
-        <button class="px-4 py-2 bg-black text-white rounded text-sm sm:text-base">
+    <div class="flex flex-col sm:flex-row w-full p-6 px-4 sm:px-16 justify-between mb-4 text-center sm:items-center shadow-lg bg-red-600 text-white">
+        <h1 class="text-2xl sm:text-4xl font-bold text-white uppercase">Faculty</h1>
+        <h1 class="text-2xl sm:text-4xl text-white uppercase hidden sm:block">
+            <?= $_SESSION['lastName'] . ', ' . strtoupper(substr($_SESSION['firstName'], 0, 1)) . '.' ?>
+        </h1>
+        <button class="px-4 py-2 bg-white text-red-600 hover:bg-red-600 hover:text-white rounded mt-4 sm:mt-0 transition duration-300 ease-in-out">
             <a href="../account/logout.php">Logout</a>
         </button>
     </div>
@@ -144,12 +147,12 @@ if (isset($_POST["submit"])  && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST["
                 <table class="RoomTable display w-full border border-gray-300">
                     <thead>
                         <tr class="bg-gray-100">
-                            <th class="px-4 py-2 text-left">Room ID</th>
-                            <th class="px-4 py-2 text-left">Room Name</th>
-                            <th class="px-4 py-2 text-left">Department</th>
-                            <th class="px-4 py-2 text-left"></th>
-                            <th class="px-4 py-2 text-left">Manage</th>
-                            <th class="px-4 py-2 text-left"></th>
+                            <th class="px-4 py-2 text-cener">Room ID</th>
+                            <th class="px-4 py-2 text-center">Room Name</th>
+                            <th class="px-4 py-2 text-center">Department</th>
+                            <th class="px-4 py-2 text-center"></th>
+                            <th class="px-4 py-2 text-center">Manage</th>
+                            <th class="px-4 py-2 text-center"></th>
                         </tr>
                     </thead>
                     <tbody class="showroombody">
@@ -163,10 +166,10 @@ if (isset($_POST["submit"])  && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST["
                                         data-id="<?= $r['id'] ?>" data-name="<?= $r['RoomName'] ?>">Check Schedule</button>
                                 </td>
                                 <td>
-                                    <button class="EditRoom text-sm sm:text-base" data-id="<?= $r['id']; ?>" data-room="<?= $r['RoomName'] ?>" data-floor="<?= $r['floor'] ?>" data-type="<?= $r['RoomType'] ?>" data-building="<?= $r['Building'] ?>" data-dept="<?= $r['department'] ?>">Edit</button>
+                                    <button class="EditRoom text-sm sm:text-base text-blue-600 font-bold" data-id="<?= $r['id']; ?>" data-room="<?= $r['RoomName'] ?>" data-floor="<?= $r['floor'] ?>" data-type="<?= $r['RoomType'] ?>" data-building="<?= $r['Building'] ?>" data-dept="<?= $r['department'] ?>">Edit</button>
                                 </td>
                                 <td>
-                                    <button class="DeleteRoom text-sm sm:text-base" data-id="<?= $r['id']; ?>" data-room="<?= $r['RoomName'] ?>" data-dept="<?= $r['department'] ?>">Delete</button>
+                                    <button class="DeleteRoom text-sm sm:text-base  text-red-600 font-bold" data-id="<?= $r['id']; ?>" data-room="<?= $r['RoomName'] ?>" data-dept="<?= $r['department'] ?>">Delete</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -219,7 +222,7 @@ if (isset($_POST["submit"])  && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST["
     <div class="ManageModal hidden fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-center">
         <div
             class="RoomManagebody flex flex-col justify-center items-end bg-white p-6 rounded-lg border border-gray-300 w-11/12 max-w-md sm:max-w-lg text-center shadow-lg">
-            <button id="closeModalManage" class="closeRoomManage px-4 py-2 rounded bg-black text-white text-sm sm:text-base">
+            <button id="closeModalManage" class="closeRoomManage px-4 py-2 rounded bg-black text-white text-sm sm:text-base  text-blue-600 font-bold">
                 Close
             </button>
             <div class="ModalManageBody py-4 w-full"></div>

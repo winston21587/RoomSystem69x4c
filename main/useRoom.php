@@ -27,7 +27,7 @@ $array = $roomObj->showNewSched($id);
 <html lang="en">
 
 <body>
-    <div class="flex flex-row w-full p-6 px-16 items-center justify-between mb-4 text-center shadow-lg">
+    <div class="flex flex-col mb-8 sm:flex-row w-full p-6 px-4 sm:px-16 justify-between mb-4 text-center sm:items-center shadow-lg bg-red-600 text-white">
         <a href="../main/MainPageUI.php">
             <svg
 
@@ -42,8 +42,10 @@ $array = $roomObj->showNewSched($id);
                     d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
             </svg>
         </a>
-        <h1 class="text-4xl text-black uppercase flex-shrink-0"><?= $_SESSION['username'] ?></h1>
-        <button class="px-4 py-2 bg-black text-white rounded">
+        <h1 class="text-2xl sm:text-4xl text-white uppercase hidden sm:block">
+            <?= $_SESSION['lastName'] . ', ' . strtoupper(substr($_SESSION['firstName'], 0, 1)) . '.' ?>
+        </h1>
+        <button class="px-4 py-2 bg-white text-red-600 hover:bg-red-600 hover:text-white rounded mt-4 sm:mt-0 transition duration-300 ease-in-out">
             <a href="../account/logout.php">Logout</a>
         </button>
     </div>
@@ -71,7 +73,7 @@ $array = $roomObj->showNewSched($id);
                 </tr>
             <?php endif; ?>
             <?php foreach ($array as $arr): ?>
-                <tr class="even:bg-gray-100">
+                <tr class="even:bg-red-100">
                     <td class="py-4"><?= $arr["RoomName"] ?></td>
                     <td class="py-4"><?= $arr["DayOfWeek"] ?></td>
                     <td class="py-4"><?= $arr["start_time"] ?></td>

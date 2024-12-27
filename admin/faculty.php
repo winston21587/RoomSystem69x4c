@@ -38,12 +38,12 @@ $id;
 
 <body class="w-full h-full reloaded">
 
-    <div class="flex flex-col sm:flex-row w-full p-6 px-4 sm:px-16 justify-between mb-4 text-center sm:items-center shadow-lg">
-        <h1 class="text-2xl sm:text-4xl font-bold text-black uppercase">Faculty</h1>
-        <h1 class="text-2xl sm:text-4xl text-black uppercase hidden sm:block">
+    <div class="flex flex-col sm:flex-row w-full p-6 px-4 sm:px-16 justify-between mb-4 text-center sm:items-center shadow-lg bg-red-600 text-white">
+        <h1 class="text-2xl sm:text-4xl font-bold text-white uppercase">Faculty</h1>
+        <h1 class="text-2xl sm:text-4xl text-white uppercase hidden sm:block">
             <?= $_SESSION['lastName'] . ', ' . strtoupper(substr($_SESSION['firstName'], 0, 1)) . '.' ?>
         </h1>
-        <button class="px-4 py-2 bg-black text-white rounded mt-4 sm:mt-0">
+        <button class="px-4 py-2 bg-white text-red-600 hover:bg-red-600 hover:text-white rounded mt-4 sm:mt-0 transition duration-300 ease-in-out">
             <a href="../account/logout.php">Logout</a>
         </button>
     </div>
