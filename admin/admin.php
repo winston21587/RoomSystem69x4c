@@ -124,12 +124,14 @@ if (isset($_POST["submit"])  && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST["
 
 <body class="w-full h-screen">
 
-    <div class="flex flex-col sm:flex-row w-full p-6 px-4 sm:px-16 justify-between mb-4 text-center sm:items-center shadow-lg bg-red-600 text-white">
+    <div
+        class="flex flex-col sm:flex-row w-full p-6 px-4 sm:px-16 justify-between mb-4 text-center sm:items-center shadow-lg bg-red-600 text-white">
         <h1 class="text-2xl sm:text-4xl font-bold text-white uppercase">Faculty</h1>
         <h1 class="text-2xl sm:text-4xl text-white uppercase hidden sm:block">
             <?= $_SESSION['lastName'] . ', ' . strtoupper(substr($_SESSION['firstName'], 0, 1)) . '.' ?>
         </h1>
-        <button class="px-4 py-2 bg-white text-red-600 hover:bg-red-600 hover:text-white rounded mt-4 sm:mt-0 transition duration-300 ease-in-out">
+        <button
+            class="px-4 py-2 bg-white text-red-600 hover:bg-red-600 hover:text-white rounded mt-4 sm:mt-0 transition duration-300 ease-in-out">
             <a href="../account/logout.php">Logout</a>
         </button>
     </div>
@@ -157,21 +159,27 @@ if (isset($_POST["submit"])  && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST["
                     </thead>
                     <tbody class="showroombody">
                         <?php foreach ($Admin->ShowRooms() as $r): ?>
-                            <tr>
-                                <td><?= $r['id']; ?></td>
-                                <td><?= $r['RoomName']; ?></td>
-                                <td><?= $r['department']; ?></td>
-                                <td>
-                                    <button class="checkSched text-sm sm:text-base"
-                                        data-id="<?= $r['id'] ?>" data-name="<?= $r['RoomName'] ?>">Check Schedule</button>
-                                </td>
-                                <td>
-                                    <button class="EditRoom text-sm sm:text-base text-blue-600 font-bold" data-id="<?= $r['id']; ?>" data-room="<?= $r['RoomName'] ?>" data-floor="<?= $r['floor'] ?>" data-type="<?= $r['RoomType'] ?>" data-building="<?= $r['Building'] ?>" data-dept="<?= $r['department'] ?>">Edit</button>
-                                </td>
-                                <td>
-                                    <button class="DeleteRoom text-sm sm:text-base  text-red-600 font-bold" data-id="<?= $r['id']; ?>" data-room="<?= $r['RoomName'] ?>" data-dept="<?= $r['department'] ?>">Delete</button>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td><?= $r['id']; ?></td>
+                            <td><?= $r['RoomName']; ?></td>
+                            <td><?= $r['department']; ?></td>
+                            <td>
+                                <button class="checkSched text-sm sm:text-base" data-id="<?= $r['id'] ?>"
+                                    data-name="<?= $r['RoomName'] ?>">Check Schedule</button>
+                            </td>
+                            <td>
+                                <button class="EditRoom text-sm sm:text-base text-blue-600 font-bold"
+                                    data-id="<?= $r['id']; ?>" data-room="<?= $r['RoomName'] ?>"
+                                    data-floor="<?= $r['floor'] ?>" data-type="<?= $r['RoomType'] ?>"
+                                    data-building="<?= $r['Building'] ?>"
+                                    data-dept="<?= $r['department'] ?>">Edit</button>
+                            </td>
+                            <td>
+                                <button class="DeleteRoom text-sm sm:text-base  text-red-600 font-bold"
+                                    data-id="<?= $r['id']; ?>" data-room="<?= $r['RoomName'] ?>"
+                                    data-dept="<?= $r['department'] ?>">Delete</button>
+                            </td>
+                        </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
@@ -219,10 +227,11 @@ if (isset($_POST["submit"])  && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST["
         </div>
     </div>
 
-    <div class="ManageModal hidden fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-center">
+    <div class="ManageModal flex fixed inset-0 bg-black bg-opacity-40 z-50  justify-center items-center hidden">
         <div
             class="RoomManagebody flex flex-col justify-center items-end bg-white p-6 rounded-lg border border-gray-300 w-11/12 max-w-md sm:max-w-lg text-center shadow-lg">
-            <button id="closeModalManage" class="closeRoomManage px-4 py-2 rounded bg-black text-white text-sm sm:text-base  text-blue-600 font-bold">
+            <button id="closeModalManage"
+                class="closeRoomManage px-4 py-2 rounded bg-black text-white text-sm sm:text-base font-bold">
                 Close
             </button>
             <div class="ModalManageBody py-4 w-full"></div>
@@ -233,17 +242,19 @@ if (isset($_POST["submit"])  && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST["
 
 
 <script>
-    const Addbtn = document.getElementById('Addbtn');
-    const modalBack = document.getElementById('customModalAdmin');
-    const closeAddBtn = document.getElementById('closeModalAdmin');
+const Addbtn = document.getElementById('Addbtn');
+const modalBack = document.getElementById('customModalAdmin');
+const closeAddBtn = document.getElementById('closeModalAdmin');
 
-    Addbtn.addEventListener('click', function() {
-        modalBack.classList.remove("hidden");
-    });
+Addbtn.addEventListener('click', function() {
+    modalBack.classList.remove("hidden");
+});
 
-    closeAddBtn.addEventListener('click', function() {
-        modalBack.classList.add("hidden");
-    });
+closeAddBtn.addEventListener('click', function() {
+    modalBack.classList.add("hidden");
+});
+
+
 </script>
 
 

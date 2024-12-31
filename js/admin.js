@@ -1,30 +1,4 @@
 $(document).ready(function () {
-
-    
-    // $('#departmentSelect').on('change', function(e) {
-    //     // console.log('Click event triggered');
-    //     const deptSelect = $(this).val();
-    //     console.log(deptSelect);
-    //     displayRoomTable(deptSelect);
-    //     e.preventDefault();
-        
-    // });
-
-    // function displayRoomTable(deptSelect){
-    //     $.ajax({
-    //         url: '../tables/Admin.ShowRooms.php',
-    //         method: 'GET', 
-    //         data: { dept: deptSelect },
-    //         success: function (response) {
-    //             $('#RoomForDept').html(response);
-    //         },
-    //         error: function (xhr, status, error) {
-              
-    //             console.error('Error:', error);
-    //             $('#RoomForDept').html('<p>Failed to load table. Please try again.</p>');
-    //         }
-    //     });
-    // };
         
 
     $('.DeleteRoom').on('click', function() {
@@ -35,6 +9,7 @@ $(document).ready(function () {
             method: 'GET', 
             success: function (response) {
                 $(".ModalManageBody").html(response);
+                $('.ManageModal').removeClass('hidden');
                 $(".ManageModal").fadeIn(); 
                 $('#deleteTrue').on('click', function(){
                     console.log('button deleted' + btnID);
@@ -85,33 +60,8 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     $(".ModalManageBody").html(response);
+                    $('.ManageModal').removeClass('hidden');
                     $(".ManageModal").fadeIn(); 
-
-                //     $('form').on('submit', function(){
-                //         const room = $('#nameEdit').val();
-                //         const dept = $('#deptEdit').val();
-                //         const floorEdit = $('#Roomfloor').val();
-                //         const RTypeEdit = $('#RoomType').val();
-                //         const buildingEdit = $('#RoomBuilding').val();
-                //         $.ajax({
-                //             url: '../Func/editRoom.php',
-                //             method: 'GET', 
-                //             data: { id: RoomID,
-                //                 roomname : room ,
-                //                 department : dept,
-                //                 floor : floorEdit,
-                //                 RoomType : RTypeEdit,
-                //                 building : buildingEdit},
-                //             success: function (response) {
-                //             $(".ManageModal").fadeOut();
-                //             window.location.href = window.location.href;
-
-                //         },
-                //             error: function () {
-                //             $(".ModalManageBody").html("<p>Error updating the data</p>");
-                //       }
-                //     });
-                // });
               },
               error: function () {
                 $(".ModalManageBody").html("<p>Error loading data</p>");
@@ -147,6 +97,7 @@ $(document).ready(function () {
                  },
                 success: function (response) {
                     $(".ModalManageBody").html(response);
+                    $('.ManageModal').removeClass('hidden');
                     $(".ManageModal").fadeIn(); 
                 }
             });
@@ -154,10 +105,6 @@ $(document).ready(function () {
             }
             
         });
-        
-
-
-
         
         
     });
@@ -280,34 +227,6 @@ $(document).ready(function () {
         });
       
     });
-
-    // const loadTabContent = (url, tabElement) => {
-    //     if (!tabElement.data("loaded")) {
-    //       $(".requestTable").load(url, function (response, status, xhr) {
-    //         if (status === "error") {
-    //           $(".requestTable").html(`<p>Error loading content: ${xhr.status} ${xhr.statusText}</p>`);
-    //         } else {
-    //           tabElement.data("loaded", true);
-    //         }
-    //       });
-    //     }
-    //   };
-      
-    //   const defaultTab = $('.tabBTN.activeTab');
-    //   const defaultUrl = defaultTab.data('url');
-    //   loadTabContent(defaultUrl, defaultTab);
-      
-    //   $(".tabBTN").on("click", function () {
-    //     const url = $(this).data("url");
-    //     $(".tabBTN").removeClass("activeTab border-b-4 border-black/70 rounded");
-    //     $(this).addClass("activeTab border-b-4 border-black/70 rounded");
-      
-    //     if (!$(this).data("loaded")) {
-    //       loadTabContent(url, $(this));
-    //     } else {
-    //       $(".requestTable").html("Content already loaded.");
-    //     }
-    //   });
 
 
 

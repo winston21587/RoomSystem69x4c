@@ -17,7 +17,6 @@ if (isset($_SESSION["userid"]) && $_SESSION["role"] == "Faculty") {
     header("location:../admin/faculty.php");
     exit;
 }
-// var_dump($_SESSION);
 
 ?>
 

@@ -7,6 +7,7 @@ $(document).ready(function () {
             method: 'GET', 
             success: function (response){
                 $(".ModalManageBody").html(response);
+                $('.ManageModal').removeClass('hidden');
                 $(".ManageModal").fadeIn(); 
                 $('#deleteSchedTrue').on("click", function (){   
                     console.log(SID);     
@@ -52,32 +53,10 @@ $(document).ready(function () {
             },
             success: function (response){
                 $(".ModalManageBody").html(response);
+                $('.ManageModal').removeClass('hidden');
+
                 $(".ManageModal").fadeIn(); 
 
-                // $('#EditSchedModal').on('click', function(){
-                //     const dayE = $('#dayOfWeek').val();       
-                //     const startE = $('input[name="start"]').val(); 
-                //     const endE = $('input[name="end"]').val();     
-                //     const subE = $('select[name="sub"]').val();   
-                //     const profE = $('#profid').val();   
-                //     $.ajax({
-                //         url: '../modals/EditSched.php',
-                //         method: 'GET', 
-                //         data: { id: SID,
-                //                 day: dayE,
-                //                 sub: subE,
-                //                 start: startE,
-                //                 end: endE,
-                //                 prof: profE
-                                
-                //         },
-                //         success:function (response){
-                //             window.location.href = window.location.href;
-
-                //         }
-                //     })
-
-                // })
             }
         })
         

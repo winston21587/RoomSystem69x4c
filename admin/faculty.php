@@ -25,12 +25,8 @@ if ($_SESSION['role'] == "Admin") {
 
 $Admin = new Admin();
 $Room = new Room();
-// var_dump($_POST);
-// var_dump($_GET);
-// var_dump($_SESSION['w']);
-// var_dump($Admin);
 $id;
-// $depart = NULL;
+
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +39,7 @@ $id;
         <h1 class="text-2xl sm:text-4xl text-white uppercase hidden sm:block">
             <?= $_SESSION['lastName'] . ', ' . strtoupper(substr($_SESSION['firstName'], 0, 1)) . '.' ?>
         </h1>
-        <button class="px-4 py-2 bg-white text-red-600 hover:bg-red-600 hover:text-white rounded mt-4 sm:mt-0 transition duration-300 ease-in-out">
+        <button class="px-4 py-2 bg-white text-red-600 hover:bg-red-300 rounded mt-4 sm:mt-0 transition duration-300 ease-in-out">
             <a href="../account/logout.php">Logout</a>
         </button>
     </div>
@@ -60,12 +56,13 @@ $id;
                 </button>
             </div>
         </div>
-
-        <table class="requestTable SentBoxTable display mx-auto mt-6 w-full sm:w-auto">
+        <div class="overflow-x-auto">
+        <table class="requestTable SentBoxTable display mx-auto mt-6 w-full sm:w-auto border border-gray-300">
         </table>
+        </div>
     </div>
 
-    <div class="table-content flex flex-col sm:flex-row pb-7 px-4 sm:px-0 justify-around items-center">
+    <div class="table-content flex flex-col lg:flex-row pb-7 px-4 sm:px-0 justify-around items-center gap-4">
 
         <div class="inbox w-full max-w-lg mb-8 sm:mb-0 sm:w-1/2">
             <h1 class="text-2xl sm:text-4xl text-center text-gray-800 mt-6 sm:mt-10">Faculty Room Schedule</h1>
@@ -88,25 +85,26 @@ $id;
             </div>
         </div>
 
-        <div class="table-2 w-full sm:w-1/2 max-w-5xl">
+        <div class="table-2 w-full max-w-5xl">
             <div class="table-2-head flex items-center justify-center w-full px-4 p-4 h-20">
                 <h2 class="text-2xl sm:text-4xl ScheduleText text-center">Schedules</h2>
             </div>
-
-            <table class="w-full border-collapse border border-gray-300">
-                <thead>
-                    <tr class="bg-red-300">
-                        <th class="px-4 py-2 text-center">Day</th>
-                        <th class="px-4 py-2 text-center">Start Time</th>
-                        <th class="px-4 py-2 text-center">End Time</th>
-                        <th class="px-4 py-2 text-center">Subject</th>
-                        <th class="px-4 py-2 text-center">Professor</th>
-                        <th class="px-4 py-2 text-center">Action</th>
-                    </tr>
-                </thead>
-                <tbody id="schedForRoom">
-                </tbody>
-            </table>
+            <div class="overflow-x-auto sm:overflow-visible p-5">
+                <table class="w-full border-collapse border border-gray-300">
+                    <thead>
+                        <tr class="bg-red-300">
+                            <th class="px-4 py-2 text-center">Day</th>
+                            <th class="px-4 py-2 text-center">Start Time</th>
+                            <th class="px-4 py-2 text-center">End Time</th>
+                            <th class="px-4 py-2 text-center">Subject</th>
+                            <th class="px-4 py-2 text-center">Professor</th>
+                            <th class="px-4 py-2 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schedForRoom">
+                        </tbody>
+                    </table>
+                </div>
         </div>
     </div>
 
@@ -133,8 +131,6 @@ $id;
     </div>
 
 </body>
-
-
 
 
 <?php include "../includes/footer.php" ?>
