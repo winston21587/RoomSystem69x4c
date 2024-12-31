@@ -265,6 +265,7 @@ $(document).ready(function () {
             data: { id: id },
                 success: function (response) {
                     $(".ModalManageBody").html(response);
+                    $('.ManageModal').removeClass('hidden');
                     $(".ManageModal").fadeIn(); 
               },
               error: function () {
