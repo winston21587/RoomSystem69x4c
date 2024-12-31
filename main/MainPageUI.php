@@ -39,7 +39,7 @@ if (isset($_SESSION["userid"]) && $_SESSION["role"] == "Faculty") {
 
     <div class="button-group">
 
-        <button id="dp-btn" class="btn dp-btn" data-bg="8">CCS</button>
+        <button id="dp-btn" class="btn dp-btn" data-bg="College Of Computing Studies">CCS</button>
         <button id="dp-btn" class="btn dp-btn" data-bg="7">CSM</button>
         <button id="dp-btn" class="btn dp-btn" data-bg="Engineering">Engineering</button>
         <button id="dp-btn" class="btn dp-btn" data-bg="CLA">CLA</button>
@@ -59,12 +59,10 @@ if (isset($_SESSION["userid"]) && $_SESSION["role"] == "Faculty") {
     </div>
 
     <script>
-        // Function to redirect with a fixed value
         function redirectToPage(departmentId) {
             window.location.href = `page2.php?id=${encodeURIComponent(departmentId)}`;
         }
 
-        // Using the data attribute for dynamic buttons
         document.querySelectorAll('.btn').forEach(button => {
             button.addEventListener('click', function() {
                 const departmentId = this.dataset.bg;
